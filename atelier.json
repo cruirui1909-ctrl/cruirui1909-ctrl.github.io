@@ -1,0 +1,195 @@
+{
+  "ready": true,
+  "title": "博物馆，打烊以后。",
+  "subtitle": "如果画中人，也有今天的日常。",
+  "scenes": [
+    {
+      "id": "pearl-tea",
+      "title": "珍珠，还是加珍珠？",
+      "subtitle": "戴珍珠耳环的少女 × 一杯奶茶",
+      "reference": "维米尔《戴珍珠耳环的少女》",
+      "image": "assets/atelier/pearl-tea.webp",
+      "accent": "#e4b663",
+      "note": "三分糖，去冰。",
+      "action": "请她喝一口",
+      "effect": "sip",
+      "layers": [
+        {
+          "name": "tea",
+          "src": "assets/atelier/tea.svg",
+          "x": 14,
+          "y": 50,
+          "width": 36,
+          "rotate": -2
+        }
+      ],
+      "source": "https://www.wikiart.org/en/johannes-vermeer/the-girl-with-a-pearl-earring",
+      "method": "原画剪贴 + 独立现代物件图层",
+      "titleLines": [
+        "珍珠，",
+        "还是加珍珠？"
+      ]
+    },
+    {
+      "id": "van-gogh-cup",
+      "title": "把星空，握在手心。",
+      "subtitle": "梵高 × 星空图案的杯子",
+      "reference": "梵高自画像与《星月夜》",
+      "image": "assets/atelier/van-gogh-cup.webp",
+      "accent": "#e9d04d",
+      "note": "今晚，灵感有点烫。",
+      "action": "点亮杯中星空",
+      "effect": "stars",
+      "layers": [
+        {
+          "name": "cup",
+          "src": "assets/atelier/starry-cup.svg",
+          "x": 20,
+          "y": 55,
+          "width": 48,
+          "rotate": -12
+        },
+        {
+          "name": "hand",
+          "src": "assets/atelier/painted-hand.webp",
+          "x": 15,
+          "y": 79,
+          "width": 35,
+          "rotate": -8
+        }
+      ],
+      "source": "https://www.wikiart.org/en/vincent-van-gogh/self-portrait-1889",
+      "method": "原画剪贴 + 独立现代物件图层",
+      "additionalSource": "手部剪贴取自达·芬奇《蒙娜丽莎》",
+      "titleLines": [
+        "把星空，",
+        "握在手心。"
+      ]
+    },
+    {
+      "id": "magritte-apple",
+      "title": "这一次，苹果可以吃。",
+      "subtitle": "《人类之子》 × 一口青苹果",
+      "reference": "马格利特《人类之子》",
+      "image": "assets/atelier/magritte-apple.webp",
+      "accent": "#b9d16c",
+      "note": "给超现实，来点维生素。",
+      "action": "咬一口想象",
+      "effect": "bite",
+      "layers": [
+        {
+          "name": "apple",
+          "src": "assets/atelier/apple.svg",
+          "x": 31,
+          "y": 17,
+          "width": 23.5,
+          "rotate": 0,
+          "activeSrc": "assets/atelier/apple-bitten.svg"
+        }
+      ],
+      "source": "https://www.wikiart.org/en/rene-magritte/the-son-of-man-1964",
+      "method": "原画剪贴 + 独立现代物件图层",
+      "titleLines": [
+        "这一次，",
+        "苹果可以吃。"
+      ]
+    },
+    {
+      "id": "mona-curls",
+      "title": "微笑，也要做造型。",
+      "subtitle": "蒙娜丽莎 × 卷发棒",
+      "reference": "达·芬奇《蒙娜丽莎》",
+      "image": "assets/atelier/mona-curls.webp",
+      "accent": "#ddabbe",
+      "note": "五百年了，换个发型。",
+      "action": "今天卷一点",
+      "effect": "curl",
+      "layers": [
+        {
+          "name": "curler",
+          "src": "assets/atelier/curler.svg",
+          "x": 35,
+          "y": 26,
+          "width": 30,
+          "rotate": 18
+        }
+      ],
+      "source": "https://www.wikiart.org/en/leonardo-da-vinci/mona-lisa",
+      "method": "原画剪贴 + 独立现代物件图层",
+      "titleLines": [
+        "微笑，",
+        "也要做造型。"
+      ]
+    },
+    {
+      "id": "night-watch",
+      "title": "注意，名画正在营业。",
+      "subtitle": "夜巡队 × 大喇叭",
+      "reference": "伦勃朗《夜巡》",
+      "image": "assets/atelier/night-watch.webp",
+      "accent": "#ed754e",
+      "note": "前面的朋友，慢一点看！",
+      "action": "借一束无声的声浪",
+      "effect": "shout",
+      "layers": [
+        {
+          "name": "megaphone",
+          "src": "assets/atelier/megaphone-114.webp",
+          "x": 51,
+          "y": 48,
+          "width": 28,
+          "rotate": -11
+        },
+        {
+          "name": "megaphone-second",
+          "src": "assets/atelier/megaphone-116.webp",
+          "x": 3,
+          "y": 49,
+          "width": 32,
+          "rotate": 9
+        }
+      ],
+      "source": "https://www.wikiart.org/en/rembrandt/the-nightwatch-1642",
+      "method": "原画剪贴 + 独立现代物件图层",
+      "titleLines": [
+        "注意，",
+        "名画正在营业。"
+      ]
+    },
+    {
+      "id": "qianlong-toast",
+      "title": "朕，今天喝点北京的。",
+      "subtitle": "乾隆 × 北京二锅头",
+      "reference": "郎世宁《乾隆皇帝肖像》",
+      "image": "assets/atelier/qianlong-toast.webp",
+      "accent": "#dcbd68",
+      "note": "把宫廷日常，过得接地气。",
+      "action": "隔着时空，碰个杯",
+      "effect": "toast",
+      "layers": [
+        {
+          "name": "bottle",
+          "src": "assets/atelier/erguotou.svg",
+          "x": 60,
+          "y": 49,
+          "width": 26,
+          "rotate": 14
+        },
+        {
+          "name": "glass",
+          "src": "assets/atelier/shot-glass.svg",
+          "x": 36,
+          "y": 51,
+          "width": 22,
+          "rotate": -9
+        }
+      ],
+      "source": "https://www.wikiart.org/en/giuseppe-castiglione-lang-shi-zhu-lang-shining/emperor-qianlong",
+      "method": "原画剪贴 + 独立现代物件图层",
+      "titleLines": [
+        "朕，今天",
+        "喝点北京的。"
+      ]
+    }
+  ]
+}

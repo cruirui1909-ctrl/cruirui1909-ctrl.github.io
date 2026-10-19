@@ -1,0 +1,95 @@
+/* An exhibition rhythm: large type, drifting paper, and responsive scene lighting. */
+.reading-progress{position:fixed;z-index:120;top:0;left:0;right:0;height:3px;pointer-events:none;background:transparent}.reading-progress span{display:block;width:100%;height:100%;background:var(--coral);transform:scaleX(0);transform-origin:left}.kinetic-type{overflow:hidden;padding:36px 0 50px;color:var(--blue);border-top:1px solid var(--line);margin:22px 4.2% 45px}.kinetic-type>div{display:flex;align-items:center;gap:.28em;width:max-content;font-size:clamp(62px,9vw,150px);font-weight:900;letter-spacing:-.075em;line-height:1.05;will-change:transform;transform:translateX(var(--type-x,0px))}.kinetic-type i{font-style:normal;font-size:.72em;color:var(--coral);padding:0 .15em;transform:rotate(var(--type-r,0deg))}.outline-type{color:transparent;-webkit-text-stroke:1.2px var(--blue)}.hero h1>span{overflow:hidden;animation:type-arrive 1.25s cubic-bezier(.22,.76,.22,1) both}.hero h1>span:nth-child(2){animation-delay:.13s}.collage-star{animation:spark-orbit 28s linear infinite}.collage-note{transition:rotate .6s cubic-bezier(.2,1.5,.4,1),box-shadow .6s}.collage-note:hover{rotate:-9deg;box-shadow:10px 14px 25px #20251f20}.hero-description{animation:ink-appear 1.4s .6s both}.feature-art{isolation:isolate}.feature-art::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--light-x,50%) var(--light-y,50%),#fff2,transparent 55%);opacity:0;transition:opacity .3s;pointer-events:none;z-index:1}.feature-art:hover::after{opacity:1}.feature-overlay{z-index:2}.feature-caption h3 a{position:relative}.feature-caption h3 a::after{content:"";position:absolute;left:0;bottom:-5px;width:100%;height:2px;transform:scaleX(0);transform-origin:left;background:var(--coral);transition:transform .4s}.feature-caption h3 a:hover::after{transform:scaleX(1)}.featured-project:nth-child(2n) .feature-no{color:var(--blue)}.section-heading h2{position:relative}.feature-art:hover>img{transform:scale(1.04)}.art-cursor{position:fixed;left:0;top:0;z-index:150;width:70px;height:70px;display:grid;place-items:center;background:var(--yellow);border-radius:50%;pointer-events:none;opacity:0;scale:.65;transition:opacity .18s,scale .25s cubic-bezier(.2,1.6,.4,1);will-change:transform}.art-cursor span{font-size:11px;letter-spacing:1px;transform:rotate(-12deg)}.art-cursor.active{opacity:1;scale:1}.chapter-nav{position:fixed;right:14px;top:43%;z-index:50;display:flex;flex-direction:column;gap:16px;opacity:0;translate:10px 0;transition:opacity .3s,translate .3s}.chapter-nav.visible{opacity:1;translate:0 0}.chapter-nav a{display:flex;align-items:center;gap:8px;position:relative;font-family:var(--serif);font-size:10px}.chapter-nav a span{display:grid;place-items:center;border:1px solid #7777;width:25px;height:25px;border-radius:50%;background:#f4f2ebdc;transition:.25s}.chapter-nav a.current span{background:var(--ink);color:var(--paper);border-color:var(--ink)}.chapter-nav a i{position:absolute;right:32px;white-space:nowrap;font:10px var(--sans);background:var(--paper);padding:5px 7px;opacity:0;transition:.2s}.chapter-nav a:hover i,.chapter-nav a:focus-visible i{opacity:1}.project-dialog[open]{animation:room-open .48s cubic-bezier(.2,.7,.2,1)}.lightbox[open]{animation:ink-appear .25s ease both}.project-dialog .dynamic-section,.project-dialog .gallery-title{animation:ink-appear .65s ease both}.footer-invitation>span{display:inline-block;transition:rotate .5s}.footer-invitation:hover>span{rotate:-5deg}.footer-invitation:hover>i{transform:translate(24px,-20px) rotate(7deg)}
+@keyframes type-arrive{from{opacity:0;translate:0 55px;clip-path:inset(100% 0 0)}to{opacity:1;translate:0 0;clip-path:inset(0)}}
+@keyframes spark-orbit{to{transform:rotate(378deg)}}
+@keyframes ink-appear{from{opacity:0}to{opacity:1}}
+@keyframes room-open{from{opacity:0;translate:0 4vh;clip-path:inset(6% 3% round 24px)}to{opacity:1;translate:0 0;clip-path:inset(0 round 0)}}
+.reduced-motion .art-cursor{display:none}.reduced-motion .kinetic-type>div{transform:none}.reduced-motion .collage-star{animation:none}.reduced-motion .chapter-nav{transition:none}
+@media(hover:none),(pointer:coarse){.art-cursor{display:none}}
+@media(max-width:1100px){.chapter-nav{display:none}}
+@media(max-width:760px){.kinetic-type{padding:28px 0 35px;margin:0 5% 25px}.kinetic-type>div{font-size:70px;gap:.2em}.outline-type{-webkit-text-stroke:1px var(--blue)}.reading-progress{height:2px}.hero-description{animation-delay:.25s}.project-dialog[open]{animation-duration:.3s}}
+@media(prefers-reduced-motion:reduce){.art-cursor{display:none}.kinetic-type>div{transform:none}.project-dialog[open]{animation:none}}
+
+/* Original painting cutouts and modern objects share one unchanging coordinate plane. */
+.playground{margin:0 0 130px;background:#17221d;color:#f5f0df;padding:56px 0 0;scroll-margin-top:0}
+.playground[hidden]{display:none}
+.art-cursor:not(.active){visibility:hidden;transform:translate(-100px,-100px)!important}
+.atelier-heading{padding:0 6.5% 44px;display:flex;justify-content:space-between;gap:40px;align-items:flex-end}
+.atelier-heading .eyebrow{color:#b8c0b3;font-size:9px;margin-bottom:19px}
+.atelier-heading h2{font-size:clamp(32px,3.8vw,62px);letter-spacing:-.05em}
+.atelier-heading p{font-size:11px;line-height:2.2;color:#e0e1d5}
+.atelier-heading p span{color:#a9b6aa;font-size:10px}
+.atelier-stage{display:grid;grid-template-columns:.88fr 1.12fr;position:relative;isolation:isolate;--scene-accent:#e4b663;background:#17221d;max-width:1660px;margin:auto}
+.atelier-canvas{grid-column:2;grid-row:1;position:relative;aspect-ratio:10/11;min-width:0;background:#22362b;overflow:hidden}
+.atelier-artwork{display:block;position:absolute;inset:0;padding:0;width:100%;height:100%;isolation:isolate;cursor:crosshair}
+.atelier-artwork:focus-visible{outline-offset:-7px;outline:3px solid #fff3b8}
+.atelier-image{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.atelier-image:not([src]){visibility:hidden}
+.atelier-layers{position:absolute;inset:0;pointer-events:none}
+.atelier-prop{display:block;position:absolute;transform:rotate(var(--prop-r));filter:drop-shadow(9px 14px 7px #10182950);transform-origin:50% 75%}
+.atelier-prop img{width:100%;max-width:none;pointer-events:none}
+.atelier-sticker{position:absolute;right:5%;bottom:5%;font:10px/1.35 var(--sans);letter-spacing:.4px;color:#213425;background:#f3df76;padding:14px 18px;text-align:left;transform:rotate(8deg);box-shadow:3px 5px 0 #14251d3b;transition:rotate .3s}
+.atelier-sticker em{font:italic 32px/1.1 var(--serif);letter-spacing:-1px}
+.atelier-artwork:hover .atelier-sticker{rotate:-6deg}
+.atelier-copy{grid-column:1;grid-row:1;position:relative;padding:11% 10% 7% 14.7%;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-width:0}
+.atelier-kicker{font-size:10px;letter-spacing:2px;line-height:1.6;display:block;color:#b9c6b5}
+.atelier-number{font-family:var(--serif);font-size:19px;display:block;margin-top:55px;font-style:italic;color:var(--scene-accent)}
+.atelier-copy h3{font-weight:500;font-size:clamp(37px,4.3vw,72px);letter-spacing:-.07em;line-height:1.3;margin:17px 0 24px;text-wrap:balance;max-width:7.5em}
+.atelier-copy h3 span{display:block}
+.atelier-subtitle{font-size:12px;color:#bdcbbd;line-height:2}
+.atelier-play{margin-top:37px;color:#f5f0df;font-size:12px;display:inline-flex;align-items:center;gap:22px;border:1px solid #ebeacd99;border-radius:50px;padding:14px 22px;transition:background .25s,color .25s}
+.atelier-play:hover{background:var(--scene-accent);color:#192218;border-color:var(--scene-accent)}
+.atelier-play i{font-style:normal;font-size:19px}.atelier-play:disabled{opacity:.4;cursor:wait}
+.atelier-note{font-size:17px;font-family:var(--serif);color:var(--scene-accent);min-height:70px;margin-top:29px;line-height:1.8}
+.atelier-credit{font-size:9px;line-height:1.8;color:#aebcad;max-width:28em}
+.atelier-switch{position:absolute;right:5%;top:5%;display:flex;gap:10px}
+.atelier-switch button{background:#14231dcc;border:1px solid #ffffffe0;color:#fff;width:41px;height:41px;border-radius:50%;font-size:22px;transition:background .2s}
+.atelier-switch button:hover{background:#f2e4a8;color:#17221b}
+.atelier-tabs{display:grid;grid-template-columns:repeat(6,1fr);padding:0 6.5%;border-top:1px solid #ffffff35}
+.atelier-tabs button{padding:26px 10px 26px 0;display:flex;gap:11px;align-items:center;text-align:left;font-size:11px;color:#adb9a9;position:relative;line-height:1.6}
+.atelier-tabs button>span{font-family:var(--serif);font-style:italic;font-size:10px}
+.atelier-tabs button>i{font-style:normal;margin-left:auto;margin-right:12px;opacity:0;transition:.2s}
+.atelier-tabs button::before{content:"";position:absolute;top:-1px;left:0;right:0;height:2px;background:#e6d580;transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.atelier-tabs button[aria-selected=true]{color:#e6d580}.atelier-tabs button[aria-selected=true]::before{transform:scaleX(1)}.atelier-tabs button[aria-selected=true]>i{opacity:1}
+.atelier-colophon{border-top:1px solid #ffffff25;padding:22px 6.5% 26px;display:flex;justify-content:space-between;gap:30px;font-size:10px;color:#aab9a9;line-height:1.8}
+.atelier-colophon details{max-width:380px}.atelier-colophon summary{cursor:pointer}.atelier-colophon p{padding-top:16px}.atelier-colophon a{display:block;padding:3px 0;text-decoration:underline;text-underline-offset:3px}
+.atelier-error{position:absolute;inset:0;display:grid;align-content:center;text-align:center;padding:30px;color:#ead579;font-size:13px;background:#20322c}.atelier-error[hidden]{display:none}.atelier-error button{text-decoration:underline;padding:12px}
+.atelier-teaser{font-size:10px;display:inline-flex;gap:14px;margin-top:22px;padding-bottom:6px;border-bottom:1px solid #7c877966}.atelier-teaser span{color:var(--blue)}
+.atelier-effects{position:absolute;inset:0;pointer-events:none;opacity:0}
+.atelier-effects i{position:absolute;font-style:normal;color:#fff7c2;font-size:54px;left:22%;top:62%;text-shadow:0 2px 8px #45381566}
+.atelier-effects i:nth-child(2){left:70%;top:56%;font-size:32px}.atelier-effects i:nth-child(3){left:74%;top:83%;font-size:66px}
+.atelier-effects b{position:absolute;border:3px solid #ffefb7;width:18%;aspect-ratio:1;left:76%;top:47%;border-radius:50%;opacity:0}
+.atelier-stage.acting .atelier-effects{opacity:1}.atelier-stage.acting .atelier-effects i{animation:atelier-twinkle 1.8s both}.atelier-stage.acting .atelier-effects i:nth-child(2){animation-delay:.2s}.atelier-stage.acting .atelier-effects i:nth-child(3){animation-delay:.45s}
+.atelier-stage[data-effect=shout].acting .atelier-effects i{display:none}.atelier-stage[data-effect=shout].acting .atelier-effects b{animation:atelier-wave 1.6s both}.atelier-stage[data-effect=shout].acting .atelier-effects b:nth-of-type(2){animation-delay:.3s}.atelier-stage[data-effect=shout].acting .atelier-effects b:nth-of-type(3){animation-delay:.6s}
+.atelier-stage.acting .atelier-note{animation:note-in .45s both}
+.atelier-stage.acting .prop-tea{animation:tea-sip 2.4s ease both;transform-origin:62.5% 8%}
+.atelier-stage.acting .prop-cup{animation:cup-lift 2.4s ease both}
+.atelier-stage.acting .prop-hand{animation:hand-lift 2.4s ease both}
+.atelier-stage[data-effect=toast] .atelier-sticker{right:auto;left:5%;bottom:4%}
+.atelier-stage.acting .prop-apple{animation:apple-bite .9s ease both}
+.atelier-stage.acting .prop-curler{animation:hair-curl 2.4s ease both;transform-origin:50% 30%}
+.atelier-stage.acting .prop-megaphone,.atelier-stage.acting .prop-megaphone-second{animation:megaphone-shout .28s ease 6}.atelier-stage.acting .prop-megaphone-second{animation-delay:.15s}
+.atelier-stage.acting .prop-bottle{animation:bottle-toast 2.4s ease both}.atelier-stage.acting .prop-glass{animation:glass-toast 2.4s ease both}
+.atelier-stage:not(.in-view) *,.atelier-stage.paused *{animation-play-state:paused!important}
+.reduced-motion .atelier-stage *{animation:none!important;transition:none!important}.reduced-motion .atelier-effects{display:none}
+@keyframes atelier-twinkle{0%,100%{opacity:0;scale:.2;rotate:-30deg}40%{opacity:1;scale:1;rotate:20deg}70%{opacity:.7;scale:.6;rotate:55deg}}
+@keyframes atelier-wave{0%{opacity:.9;scale:.3}100%{opacity:0;scale:2.4}}
+@keyframes note-in{from{opacity:0;translate:0 8px;rotate:-3deg}to{opacity:1;translate:0 0;rotate:0}}
+@keyframes tea-sip{0%,100%{rotate:0deg}35%,65%{rotate:7deg}50%{rotate:5deg}}
+@keyframes cup-lift{0%,100%{translate:0 0;rotate:0deg}45%,60%{translate:0 -12%;rotate:9deg}}
+@keyframes hand-lift{0%,100%{translate:0 0;rotate:0deg}45%,60%{translate:0 -22%;rotate:9deg}}
+@keyframes apple-bite{0%,100%{scale:1;rotate:0deg}35%{scale:.93;rotate:8deg}65%{scale:1.08;rotate:-5deg}}
+@keyframes hair-curl{0%,100%{rotate:0deg}35%{rotate:-15deg}60%{rotate:14deg}80%{rotate:-5deg}}
+@keyframes megaphone-shout{0%,100%{translate:0 0;rotate:0deg}50%{translate:2% -2%;rotate:3deg}}
+@keyframes bottle-toast{0%,100%{rotate:0deg}40%,60%{rotate:-13deg;translate:-4% -4%}}
+@keyframes glass-toast{0%,100%{translate:0 0;rotate:0deg}40%,60%{translate:15% -28%;rotate:13deg}}
+@media(max-width:1100px){.atelier-copy{padding:35px 8% 30px 12%}.atelier-copy h3{font-size:40px}.atelier-number{margin-top:27px}.atelier-kicker{font-size:8px}.atelier-play{margin-top:24px;font-size:11px;padding:12px 18px;gap:15px}.atelier-note{min-height:48px;font-size:14px;margin-top:21px}.atelier-tabs button{font-size:10px;gap:6px}.atelier-tabs button i{margin-right:4px}.atelier-heading{gap:20px}.atelier-heading p{max-width:210px}.atelier-sticker{font-size:8px;padding:11px 14px}.atelier-sticker em{font-size:25px}}
+@media(max-width:760px){
+ .art-cursor{display:none}
+ .collage-star{right:7%}
+ .playground{margin-bottom:75px;padding-top:34px}.atelier-heading{padding:0 5% 29px;display:block}.atelier-heading .eyebrow{font-size:8px;letter-spacing:1.4px}.atelier-heading h2{font-size:31px}.atelier-heading p{max-width:none;font-size:10px;margin-top:17px}.atelier-heading p br{display:none}.atelier-heading p span{display:block;font-size:9px}
+ .atelier-stage{grid-template-columns:1fr}.atelier-canvas{grid-column:1;grid-row:1;aspect-ratio:10/11}.atelier-copy{grid-column:1;grid-row:2;padding:34px 6% 28px;display:block}.atelier-kicker{font-size:8px;line-height:1.5;position:absolute;right:6%;top:34px;text-align:right}.atelier-number{margin:0 0 17px;font-size:15px}.atelier-copy h3{font-size:39px;max-width:8.2em;margin:0 0 17px}.atelier-subtitle{font-size:11px}.atelier-play{margin-top:23px;padding:12px 18px;font-size:11px}.atelier-note{font-size:14px;margin-top:23px;min-height:32px}.atelier-credit{display:block;font-size:9px}.atelier-switch{top:4%;right:5%;gap:8px}.atelier-switch button{width:35px;height:35px;font-size:19px}.atelier-sticker{font-size:8px;padding:11px 14px}.atelier-sticker em{font-size:26px}
+ .atelier-tabs{grid-template-columns:repeat(3,1fr);padding:0 5%}.atelier-tabs button{font-size:10px;padding:17px 5px 17px 0;gap:7px}.atelier-tabs button span{font-size:9px}.atelier-tabs button::before{top:auto;bottom:0}.atelier-tabs button i{display:none}.atelier-colophon{display:block;font-size:9px;padding:20px 5% 25px}.atelier-colophon details{margin-top:10px}.atelier-teaser{font-size:8px;margin-top:13px;gap:8px}.atelier-effects i{font-size:35px}.atelier-effects i:nth-child(2){font-size:25px}.atelier-effects i:nth-child(3){font-size:43px}
+}
+@media(max-width:380px){.atelier-copy h3{font-size:35px}.atelier-tabs button{font-size:9px}.atelier-heading h2{font-size:28px}}
+@media(prefers-reduced-motion:reduce){.atelier-stage *{animation:none!important;transition:none!important}.atelier-effects{display:none}}

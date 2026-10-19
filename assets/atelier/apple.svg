@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 325 340"><defs><radialGradient id="fruit" cx=".3" cy=".25" r=".8"><stop stop-color="#daec78"/><stop offset=".4" stop-color="#8caf31"/><stop offset="1" stop-color="#325322"/></radialGradient></defs>
+<path d="M163 89 Q176 44 158 21" fill="none" stroke="#564126" stroke-width="11"/>
+<path d="M169 59 Q220 0 270 34 Q226 96 169 59" fill="#568032" stroke="#f1efdc" stroke-width="5"/>
+<path d="M159 92 C72 35 8 114 28 211 C42 288 94 330 157 303 C221 331 280 295 295 202 C315 100 252 40 174 92Z" fill="url(#fruit)" stroke="#f5f0dd" stroke-width="8"/>
+<path d="M80 116 Q45 141 65 187" fill="none" stroke="#e6efba" stroke-width="12" opacity=".6"/></svg>
