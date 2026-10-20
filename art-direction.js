@@ -264,7 +264,7 @@
         }
         ctx.filter='none';ctx.fillStyle='#272d29';ctx.font='28px sans-serif';ctx.fillText(scene.title,42,1012);
         ctx.fillStyle='#6d746d';ctx.font='18px sans-serif';ctx.fillText(scene.reference,42,1050);
-        ctx.font='15px sans-serif';ctx.fillText('CHANG RUI / AFTER HOURS · cruirui1909-ctrl.github.io',42,1090);
+        ctx.font='15px sans-serif';ctx.fillText('CHANG RUI / AFTER HOURS · changrui.online',42,1090);
         const blob=await new Promise(resolve=>postcard.toBlob(resolve,'image/png'));
         if (!blob) throw new Error('Postcard export failed');
         const url=URL.createObjectURL(blob),link=document.createElement('a');
