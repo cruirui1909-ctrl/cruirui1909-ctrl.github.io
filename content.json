@@ -122,6 +122,20 @@
   ],
   "projects": [
     {
+      "id": "comic-opening",
+      "title": "漫剧片头",
+      "en": "Comic Opening",
+      "category": "art",
+      "year": null,
+      "authors": "常睿",
+      "medium": "漫剧 / 片头设计",
+      "cover": "comic-opening",
+      "summary": "从第一个镜头，走进故事。",
+      "description": "以人物、场景与镜头切换展开故事的开端，呈现漫剧片头的氛围与视觉节奏。这里保留完整片头视频。",
+      "featured": true,
+      "media": [{"asset": "comic-opening"}]
+    },
+    {
       "id": "mirror",
       "title": "欲望之镜",
       "en": "A mirror of desire",
@@ -1424,6 +1438,18 @@
     }
   ],
   "assets": {
+    "comic-opening": {
+      "id": "comic-opening",
+      "kind": "video",
+      "src": "assets/videos/comic-opening.mp4",
+      "poster": "assets/videos/comic-opening.jpg",
+      "width": 1692,
+      "height": 720,
+      "duration": 73.096417,
+      "source": "片头l.mp4",
+      "sourceBytes": 89063231,
+      "sha256": "c298aad55159b362754fde1e260b8302e3d19b16f9bc839f5f67c723749a996f"
+    },
     "study-orbit": {"id":"study-orbit","kind":"gif","width":480,"height":480,"src":"assets/studies/orbit.gif","poster":"assets/studies/orbit.webp","frames":40,"durationMs":4000},
     "study-tide": {"id":"study-tide","kind":"gif","width":480,"height":480,"src":"assets/studies/tide.gif","poster":"assets/studies/tide.webp","frames":40,"durationMs":4000},
     "study-menagerie": {"id":"study-menagerie","kind":"gif","width":480,"height":480,"src":"assets/studies/menagerie.gif","poster":"assets/studies/menagerie.webp","frames":40,"durationMs":4000},

@@ -23,7 +23,7 @@ const isVisibleSurface = el => !document.hidden && !lightbox.open && (projectDia
 function picture(id, alt, options = {}) {
   const a = asset(id);
   if (!a) return '';
-  const source = a.kind === 'gif' ? a.poster : a.src;
+  const source = a.kind === 'image' ? a.src : a.poster;
   const srcset = a.kind === 'image' ? `srcset="${a.variants.map(v => `${v.src} ${v.width}w`).join(', ')}" sizes="${options.sizes || '(max-width: 760px) 90vw, 85vw'}"` : '';
   return `<img src="${source}" ${srcset} width="${a.width}" height="${a.height}" alt="${escapeHTML(alt)}" loading="${options.eager ? 'eager' : 'lazy'}" decoding="async" ${options.className ? `class="${options.className}"` : ''}>`;
 }
@@ -157,6 +157,7 @@ function setReduced(value, persist = true) {
 function featuredMarkup(project, index) {
   let art;
   switch (project.id) {
+    case 'comic-opening': art = `<a class="feature-art" href="#work/comic-opening" aria-label="观看完整漫剧片头">${picture('comic-opening', '漫剧片头中的人物画面')}<span class="feature-overlay" aria-hidden="true">↗</span></a>`; break;
     case 'mirror': art = `<a class="feature-art" href="#work/mirror" aria-label="观看欲望之镜">${picture('image22', '欲望之镜，完整球体拼贴作品')}<span class="feature-overlay" aria-hidden="true">↗</span></a>`; break;
     case 'water': art = `<div class="water-layout">${gif('image18', '水的诗篇 01')}${gif('image20', '水的诗篇 03')}</div>`; break;
     case 'alchemy': art = `<a class="feature-art" href="#work/alchemy" aria-label="观看生物炼金术">${picture('image28', '生物炼金术中的九幅奇异生物')}<span class="feature-overlay" aria-hidden="true">↗</span></a>`; break;
@@ -176,7 +177,8 @@ function renderHome() {
     ['study-menagerie', '纸上漫游', '生物炼金术 / 剪贴剧场']
   ].map(([id,title,note],i) => `<article class="study-item">${gif(id,title,{link:true})}<div class="study-caption"><span>0${i+1}</span><div><h3>${title}</h3><p>${note}</p></div><a href="${asset(id).poster.replace('.webp','.png')}" download aria-label="下载${title}静帧">PNG ↓</a></div></article>`).join('');
   $('#featured-works').innerHTML = content.projects.filter(p => p.featured).map(featuredMarkup).join('');
-  $('#filters').innerHTML = [{id:'all', label:'全部作品'}, ...content.categories].map((c,i) => `<button type="button" data-filter="${c.id}" aria-pressed="${i === 0}">${c.label}${i === 0 ? ' 11' : ''}</button>`).join('');
+  $('#filters').innerHTML = [{id:'all', label:'全部作品'}, ...content.categories].map((c,i) => `<button type="button" data-filter="${c.id}" aria-pressed="${i === 0}">${c.label}${i === 0 ? ` ${content.projects.length}` : ''}</button>`).join('');
+  $('.archive-total').textContent = `${content.projects.length} 个项目，持续生长中`;
   $('#archive-grid').innerHTML = content.projects.map((p,i) => {
     const kinds = p.media.map(m => asset(m.asset).kind);
     const label = kinds.includes('video') ? 'VIDEO' : kinds.includes('gif') ? 'GIF' : kinds.includes('audio') ? 'SOUND' : '';
@@ -231,10 +233,10 @@ function renderProject(project) {
   const gifs = dynamic.filter(m => asset(m.asset).kind === 'gif');
   if (gifs.length) dynamicMarkup += `<section class="dynamic-section"><div class="dynamic-heading"><h3>原始动态 · ${gifs.length} GIF</h3><span>点击播放，可下载原始 GIF</span></div><div class="gif-grid">${gifs.map((m,i) => gif(m.asset, `${project.title} ${String(i+1).padStart(2,'0')}`, {link:true})).join('')}</div></section>`;
   if (project.comparison) dynamicMarkup += `<section class="dynamic-section"><div class="dynamic-heading"><h3>年画风格转化</h3><span>两段完整原始视频 · 各约 1 分钟</span></div><div class="comparison-tools" role="group" aria-label="视频对照布局"><button type="button" data-compare="both" class="active" aria-pressed="true">并排观看</button><button type="button" data-compare="original" aria-pressed="false">只看原视频</button><button type="button" data-compare="generated" aria-pressed="false">只看生成视频</button><button type="button" id="play-pair">一起播放 ▶</button></div><div class="comparison-videos">${videoMarkup(project.comparison.original, '原视频')}${videoMarkup(project.comparison.generated, '生成视频')}</div></section>`;
-  else for (const m of dynamic.filter(m => asset(m.asset).kind === 'video')) dynamicMarkup += `<section class="dynamic-section"><div class="dynamic-heading"><h3>${project.title} · 完整演示</h3><span>点击播放 · 声音默认关闭</span></div>${videoMarkup(m.asset, `${project.title} H5 演示`)}</section>`;
+  else for (const m of dynamic.filter(m => asset(m.asset).kind === 'video')) dynamicMarkup += `<section class="dynamic-section"><div class="dynamic-heading"><h3>${project.title} · 完整视频</h3><span>点击播放 · 声音默认关闭</span></div>${videoMarkup(m.asset, `${project.title} · 完整视频`)}</section>`;
   for (const m of dynamic.filter(m => asset(m.asset).kind === 'audio')) dynamicMarkup += `<section class="dynamic-section audio-unit"><p>把声音交给想象。</p><audio src="${asset(m.asset).src}" controls preload="none" aria-label="AI 音乐原始音频"></audio></section>`;
   const nextProject = content.projects[(content.projects.indexOf(project)+1) % content.projects.length];
-  $('#project-content').innerHTML = `<header class="project-heading"><span class="eyebrow">${category} / ${project.medium}</span><h2 id="project-title" tabindex="-1">${project.title}</h2><p class="english-title">${project.en}</p><div class="project-description"><div class="project-facts">作者 / ${project.authors}<br>${project.year ? '年份 / ' + project.year + '<br>' : ''}媒介 / ${project.medium}</div><p>${project.description}</p></div></header><div class="project-gallery">${dynamicMarkup}<h3 class="gallery-title">作品与过程 / ${stills.length} 张图像</h3><div class="gallery-grid">${stills.map((m,i) => { const a = asset(m.asset); return `<figure class="gallery-item ${a.width/a.height > 1.65 || (i === 0 && stills.length < 6) ? 'wide' : ''}"><button type="button" data-enlarge="${m.asset}" aria-label="放大 ${project.title} 第 ${i+1} 张图像">${picture(m.asset, `${project.title} · 图像 ${i+1}`)}<span class="image-expand" aria-hidden="true">＋</span></button><figcaption><span>${project.title} / ${String(i+1).padStart(2,'0')}</span><span>查看大图 ↗</span></figcaption></figure>`; }).join('')}</div></div><a class="detail-next" href="#work/${nextProject.id}"><div><span>NEXT PROJECT / 继续漫游</span><h3>${nextProject.title}</h3></div><span aria-hidden="true">↗</span></a>`;
+  $('#project-content').innerHTML = `<header class="project-heading"><span class="eyebrow">${category} / ${project.medium}</span><h2 id="project-title" tabindex="-1">${project.title}</h2><p class="english-title">${project.en}</p><div class="project-description"><div class="project-facts">作者 / ${project.authors}<br>${project.year ? '年份 / ' + project.year + '<br>' : ''}媒介 / ${project.medium}</div><p>${project.description}</p></div></header><div class="project-gallery">${dynamicMarkup}${stills.length ? `<h3 class="gallery-title">作品与过程 / ${stills.length} 张图像</h3>` : ''}<div class="gallery-grid">${stills.map((m,i) => { const a = asset(m.asset); return `<figure class="gallery-item ${a.width/a.height > 1.65 || (i === 0 && stills.length < 6) ? 'wide' : ''}"><button type="button" data-enlarge="${m.asset}" aria-label="放大 ${project.title} 第 ${i+1} 张图像">${picture(m.asset, `${project.title} · 图像 ${i+1}`)}<span class="image-expand" aria-hidden="true">＋</span></button><figcaption><span>${project.title} / ${String(i+1).padStart(2,'0')}</span><span>查看大图 ↗</span></figcaption></figure>`; }).join('')}</div></div><a class="detail-next" href="#work/${nextProject.id}"><div><span>NEXT PROJECT / 继续漫游</span><h3>${nextProject.title}</h3></div><span aria-hidden="true">↗</span></a>`;
   document.title = `${project.title} — 常睿 CHANG RUI`;
   projectDialog.scrollTop = 0;
   initMedia(projectDialog);

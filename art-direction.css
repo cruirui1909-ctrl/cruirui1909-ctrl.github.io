@@ -88,6 +88,7 @@
 @media(prefers-reduced-motion:reduce){.atelier-stage *{animation:none!important;transition:none!important}.atelier-effects{display:none}}
 
 .loop-studies{padding-top:30px;padding-bottom:110px;letter-spacing:0}
+.feature-comic-opening .feature-art{aspect-ratio:1692/720;background:#131614}
 .loop-heading{border-top:1px solid var(--line);padding-top:26px;margin-bottom:34px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
 .loop-heading .eyebrow{letter-spacing:0;margin-bottom:16px}
 .loop-heading h2{font-size:38px;line-height:1.4;letter-spacing:0}
