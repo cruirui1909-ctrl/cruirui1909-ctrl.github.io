@@ -53,6 +53,7 @@ function setGIF(state, playing) {
 }
 
 function updateMedia() {
+  document.documentElement.classList.toggle('page-hidden', document.hidden);
   const playingVideos = [];
   for (const [video, state] of videoStates) {
     if (!video.isConnected) { videoStates.delete(video); continue; }
@@ -148,22 +149,26 @@ function setReduced(value, persist = true) {
   if (reduced) {
     for (const state of gifStates.values()) state.manual = 0;
     for (const video of videoStates.keys()) video.pause();
-    $$('.cutout').forEach(el => { el.style.setProperty('--px', '0px'); el.style.setProperty('--py', '0px'); });
+    $$('[data-depth]').forEach(el => { el.style.setProperty('--px', '0px'); el.style.setProperty('--py', '0px'); });
   }
   if (persist) { try { localStorage.setItem('cr-reduced-motion', String(value)); } catch {} }
   updateMedia();
+}
+
+function artLayer(id, alt, depth = 16) {
+  return `<span class="art-layer" data-depth="${depth}">${picture(id, alt)}</span>`;
 }
 
 function featuredMarkup(project, index) {
   let art;
   switch (project.id) {
     case 'comic-opening': art = `<a class="feature-art" href="#work/comic-opening" aria-label="观看完整漫剧片头">${picture('comic-opening', '漫剧片头中的人物画面')}<span class="feature-overlay" aria-hidden="true">↗</span></a>`; break;
-    case 'mirror': art = `<a class="feature-art" href="#work/mirror" aria-label="观看欲望之镜">${picture('image22', '欲望之镜，完整球体拼贴作品')}<span class="feature-overlay" aria-hidden="true">↗</span></a>`; break;
+    case 'mirror': art = `<a class="feature-art kinetic-art mirror-stage" href="#work/mirror" aria-label="观看欲望之镜">${artLayer('mirror-sphere', '欲望之镜球体拼贴', 24)}<span class="feature-overlay" aria-hidden="true">↗</span></a>`; break;
     case 'water': art = `<div class="water-layout">${gif('image18', '水的诗篇 01')}${gif('image20', '水的诗篇 03')}</div>`; break;
-    case 'alchemy': art = `<a class="feature-art" href="#work/alchemy" aria-label="观看生物炼金术">${picture('image28', '生物炼金术中的九幅奇异生物')}<span class="feature-overlay" aria-hidden="true">↗</span></a>`; break;
+    case 'alchemy': art = `<a class="feature-art kinetic-art alchemy-stage" href="#work/alchemy" aria-label="观看生物炼金术">${artLayer('alchemy-rhino', '背着鸟的奇异犀牛', 20)}${artLayer('alchemy-antler', '生物炼金术中的角兽', -14)}${artLayer('alchemy-shell', '生物炼金术中的甲壳生物', 28)}<span class="feature-overlay" aria-hidden="true">↗</span></a>`; break;
     case 'upstream': art = `<div class="upstream-layout">${picture('image31', '逆流交互影像展览现场')}${gif('image32', '逆流 · 身体与影像')}</div>`; break;
     case 'ocean': art = `<a class="feature-art ocean-layout" href="#work/ocean" aria-label="观看观海赞">${picture('image98', '观海赞角色故事', {className:'ocean-main'})}${picture('image103', '观海赞祈福插画', {className:'ocean-secondary'})}<span class="feature-overlay" aria-hidden="true">↗</span></a>`; break;
-    case 'yangliuqing': art = `<a class="feature-art year-art" href="#work/yangliuqing" aria-label="观看新杨柳青创研">${['image68','image69','image70'].map(id => picture(id, '杨柳青年画风格生成作品')).join('')}<span class="feature-overlay" aria-hidden="true">↗</span></a>`; break;
+    case 'yangliuqing': art = `<a class="feature-art kinetic-art year-stage" href="#work/yangliuqing" aria-label="观看新杨柳青创研">${['image68','image69','image70'].map((id,i) => artLayer(id+'-figure', '杨柳青年画中的人物与花卉', [18,-12,24][i])).join('')}<span class="feature-overlay" aria-hidden="true">↗</span></a>`; break;
   }
   const dynamic = project.media.some(m => ['gif','video','audio'].includes(asset(m.asset).kind));
   return `<article class="featured-project feature-${project.id} reveal">${art}<div class="feature-caption"><span class="feature-no">0${index + 1}</span><div><h3><a href="#work/${project.id}">${project.title} <small>${project.en}</small></a></h3><p>${project.summary}</p></div><a class="feature-meta" href="#work/${project.id}"><span>${dynamic ? '● 动态作品' : project.medium.split(' / ')[0]}</span>查看作品 ↗</a></div></article>`;
@@ -201,21 +206,29 @@ function renderHome() {
   });
   initMedia($('#site'));
   const revealObserver = new IntersectionObserver(entries => {
-    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add('revealed'); revealObserver.unobserve(entry.target); }
+    for (const entry of entries) {
+      if (entry.target.matches('.kinetic-art')) entry.target.classList.toggle('in-view', entry.isIntersecting);
+      else if (entry.isIntersecting) { entry.target.classList.add('revealed'); revealObserver.unobserve(entry.target); }
+    }
   }, {threshold:.04});
-  $$('.reveal').forEach(el => revealObserver.observe(el));
+  $$('.reveal, .kinetic-art').forEach(el => revealObserver.observe(el));
   let frame;
-  $('.hero').addEventListener('pointermove', event => {
+  for (const surface of $$('.hero, .kinetic-art')) {
+  surface.addEventListener('pointermove', event => {
     if (reduced || event.pointerType !== 'mouse') return;
     cancelAnimationFrame(frame);
     frame = requestAnimationFrame(() => {
-      const rect = $('.hero').getBoundingClientRect();
+      const rect = surface.getBoundingClientRect();
       const x = (event.clientX - rect.left) / rect.width - .5;
       const y = (event.clientY - rect.top) / rect.height - .5;
-      $$('[data-depth]').forEach(el => { el.style.setProperty('--px', `${x * +el.dataset.depth}px`); el.style.setProperty('--py', `${y * +el.dataset.depth}px`); });
+      $$('[data-depth]', surface).forEach(el => { el.style.setProperty('--px', `${x * +el.dataset.depth}px`); el.style.setProperty('--py', `${y * +el.dataset.depth}px`); });
     });
   });
-  $('.hero').addEventListener('pointerleave', () => $$('[data-depth]').forEach(el => { el.style.setProperty('--px','0px'); el.style.setProperty('--py','0px'); }));
+  surface.addEventListener('pointerleave', () => {
+    cancelAnimationFrame(frame);
+    $$('[data-depth]', surface).forEach(el => { el.style.setProperty('--px','0px'); el.style.setProperty('--py','0px'); });
+  });
+  }
 }
 
 function videoMarkup(id, title) {

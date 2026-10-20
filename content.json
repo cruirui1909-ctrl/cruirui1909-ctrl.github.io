@@ -1438,6 +1438,13 @@
     }
   ],
   "assets": {
+    "mirror-sphere": {"kind":"image","src":"assets/cutouts/mirror-sphere.webp","width":717,"height":717,"variants":[{"src":"assets/cutouts/mirror-sphere.webp","width":717}]},
+    "alchemy-rhino": {"kind":"image","src":"assets/cutouts/alchemy-rhino.webp","width":370,"height":259,"variants":[{"src":"assets/cutouts/alchemy-rhino.webp","width":370}]},
+    "alchemy-antler": {"kind":"image","src":"assets/cutouts/alchemy-antler.webp","width":366,"height":269,"variants":[{"src":"assets/cutouts/alchemy-antler.webp","width":366}]},
+    "alchemy-shell": {"kind":"image","src":"assets/cutouts/alchemy-shell.webp","width":371,"height":217,"variants":[{"src":"assets/cutouts/alchemy-shell.webp","width":371}]},
+    "image68-figure": {"kind":"image","src":"assets/cutouts/image68-figure.webp","width":984,"height":1304,"variants":[{"src":"assets/cutouts/image68-figure.webp","width":984}]},
+    "image69-figure": {"kind":"image","src":"assets/cutouts/image69-figure.webp","width":984,"height":1304,"variants":[{"src":"assets/cutouts/image69-figure.webp","width":984}]},
+    "image70-figure": {"kind":"image","src":"assets/cutouts/image70-figure.webp","width":984,"height":1269,"variants":[{"src":"assets/cutouts/image70-figure.webp","width":984}]},
     "comic-opening": {
       "id": "comic-opening",
       "kind": "video",
