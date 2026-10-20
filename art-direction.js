@@ -62,30 +62,63 @@
     let effectFrame;
     let started = false;
     let ready = false;
+    let drag = null;
+    let dragged = false;
+    const visited = new Set();
+    const actionCounts = new Map();
+    const replyCounts = new Map();
     section.innerHTML = `
       <div class="atelier-heading"><div><span class="eyebrow">AFTER HOURS / THE MUSEUM CLUB</span><h2 id="playground-title">${escape(collection.title)}</h2></div><p><span class="atelier-hours">18:01 <i></i></span>${escape(collection.subtitle)}</p></div>
       <div class="atelier-stage" id="atelier-scene" role="tabpanel" tabindex="0">
         <div class="atelier-canvas">
-          <button class="atelier-artwork" type="button" aria-label="与画中人互动">
+          <div class="atelier-artwork">
             <img class="atelier-image" alt="" width="1200" height="960" decoding="async">
-            <span class="atelier-layers" aria-hidden="true"></span>
+            <button class="atelier-portrait" type="button" aria-label="和画中人聊聊" title="和画中人聊聊" disabled></button>
+            <span class="atelier-layers"></span>
             <span class="atelier-effects" aria-hidden="true"><b></b><b></b><b></b></span>
-          </button>
+          </div>
           <p class="atelier-error" role="status" hidden>画面暂未加载，<button type="button">再试一次 ↗</button></p>
         </div>
-        <div class="atelier-copy"><div class="atelier-copy-top"><span class="atelier-number">01 / 06</span><div class="atelier-switch"><button type="button" class="atelier-prev" aria-label="上一个名画场景" title="上一个名画场景">←</button><button type="button" class="atelier-next" aria-label="下一个名画场景" title="下一个名画场景">→</button></div></div><span class="atelier-kicker">A DIFFERENT KIND<br>OF STILL LIFE.</span><h3></h3><p class="atelier-subtitle"></p><p class="atelier-note" aria-live="polite"></p><button class="atelier-play" type="button"><span></span><i>↗</i></button><span class="atelier-credit"></span></div>
+        <div class="atelier-copy"><div class="atelier-copy-top"><span class="atelier-number">01 / 06</span><div class="atelier-switch"><button type="button" class="atelier-prev" aria-label="上一个名画场景" title="上一个名画场景">←</button><button type="button" class="atelier-next" aria-label="下一个名画场景" title="下一个名画场景">→</button></div></div><span class="atelier-kicker">A DIFFERENT KIND<br>OF STILL LIFE.</span><h3></h3><p class="atelier-subtitle"></p><p class="atelier-note" aria-live="polite"></p><button class="atelier-play" type="button"><span></span><i>↗</i></button><button class="atelier-talk" type="button" disabled>和画中人聊聊 <span aria-hidden="true">↗</span></button><span class="atelier-credit"></span></div>
       </div>
+      <div class="atelier-tools" role="group" aria-label="展厅设置"><label><input class="atelier-original" type="checkbox">只看原画</label><label><input class="atelier-night" type="checkbox">夜间展灯</label><button class="atelier-reset" type="button" title="道具归位" aria-label="道具归位" disabled>↺</button><button class="atelier-save" type="button" disabled>保存明信片 <span aria-hidden="true">↓</span></button><span class="atelier-passport" role="status">今夜足迹 0 / 6</span></div>
       <div class="atelier-tabs" role="tablist" aria-label="选择名画场景">${collection.scenes.map((scene,i)=>`<button type="button" role="tab" id="scene-tab-${scene.id}" aria-controls="atelier-scene" aria-selected="${i===0}" tabindex="${i===0 ? 0 : -1}" data-scene="${i}"><img src="${escape(scene.thumbnail)}" width="360" height="288" alt="" loading="lazy"><span><small>0${i+1}</small>${escape(scene.subtitle.split(' × ')[0])}</span></button>`).join('')}</div>
       <div class="atelier-colophon"><span>THE AFTER-HOURS COLLECTION / 六个寻常的异想</span><details><summary>原画与拼贴来源 ↗</summary><p>原画图像经 WikiArt 获取，保留画面与笔触；日常物件以独立剪贴图层加入展厅。${collection.scenes.map(s=>`<a href="${escape(s.source)}" target="_blank" rel="noopener noreferrer">${escape(s.reference)} ↗</a>`).join('')}<a href="https://www.wikiart.org/en/vincent-van-gogh/the-starry-night-1889" target="_blank" rel="noopener noreferrer">梵高《星月夜》杯身图案 ↗</a><a href="https://pngimg.com/images/technic/megaphone" target="_blank" rel="noopener noreferrer">喇叭剪贴素材：PNGimg ↗</a></p></details></div>`;
     const stage = section.querySelector('.atelier-stage');
     const canvas = section.querySelector('.atelier-canvas');
     const picture = section.querySelector('.atelier-image');
     const layers = section.querySelector('.atelier-layers');
-    const artwork = section.querySelector('.atelier-artwork');
+    const portrait = section.querySelector('.atelier-portrait');
     const note = section.querySelector('.atelier-note');
     const play = section.querySelector('.atelier-play');
+    const talk = section.querySelector('.atelier-talk');
+    const save = section.querySelector('.atelier-save');
+    const reset = section.querySelector('.atelier-reset');
+    const original = section.querySelector('.atelier-original');
     const tabs = [...section.querySelectorAll('[data-scene]')];
     const error = section.querySelector('.atelier-error');
+
+    function stamp() {
+      visited.add(active);
+      tabs[active].classList.add('visited');
+      section.querySelector('.atelier-passport').textContent = visited.size===6 ? '今夜足迹 6 / 6 · 全部相遇' : `今夜足迹 ${visited.size} / 6`;
+    }
+    function chat() {
+      if (!ready) return;
+      const replies=collection.scenes[active].replies;
+      const count=replyCounts.get(active)||0;
+      note.textContent=`「${replies[count%replies.length]}」`;
+      replyCounts.set(active,count+1);
+      stamp();
+    }
+    function resetProps() {
+      resetAction();
+      for (const prop of layers.children) {
+        prop.style.left=prop.dataset.homeX+'%';
+        prop.style.top=prop.dataset.homeY+'%';
+      }
+      note.textContent=collection.scenes[active].note;
+    }
 
     function resetAction() {
       clearTimeout(effectTimer);
@@ -99,6 +132,8 @@
       const sequence = ++loadSequence;
       started = true;
       ready = false;
+      drag = null;
+      dragged = false;
       resetAction();
       stage.dataset.effect = scene.effect;
       stage.style.setProperty('--scene-accent',scene.accent);
@@ -107,13 +142,13 @@
       section.querySelector('.atelier-subtitle').textContent = scene.subtitle;
       section.querySelector('.atelier-credit').textContent = `原画 / ${scene.reference}`;
       play.querySelector('span').textContent = scene.action;
-      artwork.setAttribute('aria-label',`${scene.subtitle}。${scene.action}`);
+      portrait.setAttribute('aria-label',`${scene.reference}。和画中人聊聊`);
       note.textContent = scene.note;
       tabs.forEach((tab,i) => { tab.setAttribute('aria-selected',String(i===active));tab.tabIndex=i===active ? 0 : -1; });
       stage.setAttribute('aria-labelledby',tabs[active].id);
       if (focus) tabs[active].focus({preventScroll:true});
       error.hidden = true;
-      play.disabled = artwork.disabled = true;
+      play.disabled = portrait.disabled = talk.disabled = save.disabled = reset.disabled = true;
       stage.classList.add('loading');
       stage.setAttribute('aria-busy','true');
       picture.removeAttribute('src');
@@ -125,9 +160,11 @@
         if (sequence !== loadSequence) return;
         picture.src = scene.image;
         picture.alt = scene.reference+'与日常物件的展厅拼贴';
-        layers.innerHTML = scene.layers.map(p=>`<span class="atelier-prop prop-${escape(p.name)}" style="left:${p.x}%;top:${p.y}%;width:${p.width}%;--prop-r:${p.rotate}deg"><img src="${escape(p.src)}" alt="" ${p.activeSrc ? `data-rest-src="${escape(p.src)}" data-active-src="${escape(p.activeSrc)}"` : ''}></span>`).join('');
+        layers.innerHTML = scene.layers.map(p=>`<button type="button" class="atelier-prop prop-${escape(p.name)}" data-home-x="${p.x}" data-home-y="${p.y}" data-rotation="${p.rotate}" style="left:${p.x}%;top:${p.y}%;width:${p.width}%;--prop-r:${p.rotate}deg" aria-label="${escape(scene.action)}：${escape(p.label)}" title="${escape(p.label)}" aria-keyshortcuts="ArrowUp ArrowDown ArrowLeft ArrowRight Home"><img src="${escape(p.src)}" alt="" draggable="false" ${p.activeSrc ? `data-rest-src="${escape(p.src)}" data-active-src="${escape(p.activeSrc)}"` : ''}></button>`).join('');
+        layers.inert=original.checked;
         ready = true;
-        play.disabled = artwork.disabled = false;
+        portrait.disabled = talk.disabled = save.disabled = reset.disabled = false;
+        play.disabled = original.checked;
         canvas.getAnimations().forEach(animation=>animation.cancel());
         if (!quiet()) canvas.animate([{opacity:.2,clipPath:'inset(0 0 0 8%)',transform:'translateY(18px)'},{opacity:1,clipPath:'inset(0)',transform:'translateY(0)'}],{duration:550,easing:'cubic-bezier(.2,.75,.2,1)'});
       } catch {
@@ -138,9 +175,13 @@
       }
     }
     function performScene() {
-      if (!ready) return;
+      if (!ready || original.checked) return;
       resetAction();
-      note.textContent = collection.scenes[active].note;
+      const scene=collection.scenes[active];
+      const count=actionCounts.get(active)||0;
+      note.textContent=scene.responses[count%scene.responses.length];
+      actionCounts.set(active,count+1);
+      stamp();
       layers.querySelectorAll('[data-active-src]').forEach(img=>img.src=img.dataset.activeSrc);
       if (!quiet()) effectFrame = requestAnimationFrame(() => {
         stage.classList.add('acting');
@@ -152,8 +193,85 @@
       if (tab) showScene(+tab.dataset.scene);
       else if (event.target.closest('.atelier-next')) showScene(active+1);
       else if (event.target.closest('.atelier-prev')) showScene(active-1);
-      else if (event.target.closest('.atelier-play,.atelier-artwork')) performScene();
+      else if (event.target.closest('.atelier-play,.atelier-prop')) { if (!dragged || !event.target.closest('.atelier-prop') || event.detail===0) performScene();dragged=false; }
+      else if (event.target.closest('.atelier-talk,.atelier-portrait')) chat();
+      else if (event.target.closest('.atelier-reset')) resetProps();
       else if (event.target.closest('.atelier-error button')) showScene(active);
+    });
+    original.addEventListener('change',()=>{
+      resetAction();
+      stage.classList.toggle('original-view',original.checked);
+      layers.inert=original.checked;
+      play.disabled=!ready||original.checked;
+    });
+    section.querySelector('.atelier-night').addEventListener('change',event=>stage.classList.toggle('night-view',event.target.checked));
+    function moveProp(prop, dx, dy) {
+      const bounds=canvas.getBoundingClientRect(),box=prop.getBoundingClientRect();
+      const x=Math.max(bounds.left+3-box.left,Math.min(bounds.right-3-box.right,dx));
+      const y=Math.max(bounds.top+3-box.top,Math.min(bounds.bottom-3-box.bottom,dy));
+      prop.style.left=(parseFloat(prop.style.left)+x/bounds.width*100)+'%';
+      prop.style.top=(parseFloat(prop.style.top)+y/bounds.height*100)+'%';
+    }
+    layers.addEventListener('pointerdown',event=>{
+      const prop=event.target.closest('.atelier-prop');
+      if (!prop||event.button!==0) return;
+      resetAction();
+      dragged=false;
+      drag={prop,id:event.pointerId,x:event.clientX,y:event.clientY,distance:0};
+      prop.setPointerCapture(event.pointerId);
+      prop.classList.add('dragging');
+    });
+    layers.addEventListener('pointermove',event=>{
+      if (!drag||drag.id!==event.pointerId) return;
+      const dx=event.clientX-drag.x,dy=event.clientY-drag.y;
+      drag.distance+=Math.hypot(dx,dy);
+      if (drag.distance>5) { moveProp(drag.prop,dx,dy);dragged=true; }
+      drag.x=event.clientX;drag.y=event.clientY;
+    });
+    function endDrag(event) {
+      if (!drag||drag.id!==event.pointerId) return;
+      drag.prop.classList.remove('dragging');
+      if (dragged) { note.textContent=collection.scenes[active].moveNote;stamp(); }
+      drag=null;
+    }
+    layers.addEventListener('pointerup',endDrag);
+    layers.addEventListener('pointercancel',endDrag);
+    layers.addEventListener('lostpointercapture',endDrag);
+    layers.addEventListener('keydown',event=>{
+      const prop=event.target.closest('.atelier-prop');
+      if (!prop||!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home'].includes(event.key)) return;
+      event.preventDefault();resetAction();
+      if (event.key==='Home') { prop.style.left=prop.dataset.homeX+'%';prop.style.top=prop.dataset.homeY+'%'; }
+      else {
+        moveProp(prop,event.key==='ArrowLeft'?-8:event.key==='ArrowRight'?8:0,event.key==='ArrowUp'?-8:event.key==='ArrowDown'?8:0);
+        note.textContent=collection.scenes[active].moveNote;stamp();
+      }
+    });
+    save.addEventListener('click',async()=>{
+      if (!ready) return;
+      const scene=collection.scenes[active];
+      save.disabled=true;
+      try {
+        const postcard=document.createElement('canvas');postcard.width=1200;postcard.height=1120;
+        const ctx=postcard.getContext('2d');
+        ctx.fillStyle='#f8f9f6';ctx.fillRect(0,0,1200,1120);
+        ctx.filter=stage.classList.contains('night-view')?'brightness(.72)':'none';
+        ctx.drawImage(picture,0,0,1200,960);
+        if (!original.checked) for (const prop of layers.children) {
+          const image=prop.querySelector('img'),w=parseFloat(prop.style.width)*12,h=w*image.naturalHeight/image.naturalWidth;
+          ctx.save();ctx.translate(parseFloat(prop.style.left)*12+w/2,parseFloat(prop.style.top)*9.6+h);
+          ctx.rotate(+prop.dataset.rotation*Math.PI/180);ctx.drawImage(image,-w/2,-h,w,h);ctx.restore();
+        }
+        ctx.filter='none';ctx.fillStyle='#272d29';ctx.font='28px sans-serif';ctx.fillText(scene.title,42,1012);
+        ctx.fillStyle='#6d746d';ctx.font='18px sans-serif';ctx.fillText(scene.reference,42,1050);
+        ctx.font='15px sans-serif';ctx.fillText('CHANG RUI / AFTER HOURS · cruirui1909-ctrl.github.io',42,1090);
+        const blob=await new Promise(resolve=>postcard.toBlob(resolve,'image/png'));
+        if (!blob) throw new Error('Postcard export failed');
+        const url=URL.createObjectURL(blob),link=document.createElement('a');
+        link.href=url;link.download=`after-hours-${scene.id}.png`;link.click();
+        setTimeout(()=>URL.revokeObjectURL(url),60000);
+      } catch { note.textContent='明信片暂未保存，请再试一次。'; }
+      finally { save.disabled=!ready; }
     });
     section.querySelector('.atelier-tabs').addEventListener('keydown',event => {
       if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
