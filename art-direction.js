@@ -63,22 +63,20 @@
     let started = false;
     let ready = false;
     section.innerHTML = `
-      <div class="atelier-heading"><div><span class="eyebrow">INTERLUDE / A LITTLE ARTISTIC DETOUR</span><h2 id="playground-title">${escape(collection.title)}</h2></div><p>${escape(collection.subtitle)}<br><span>原画拼贴 · 六个不太正经的日常</span></p></div>
+      <div class="atelier-heading"><div><span class="eyebrow">AFTER HOURS / THE MUSEUM CLUB</span><h2 id="playground-title">${escape(collection.title)}</h2></div><p><span class="atelier-hours">18:01 <i></i></span>${escape(collection.subtitle)}</p></div>
       <div class="atelier-stage" id="atelier-scene" role="tabpanel" tabindex="0">
         <div class="atelier-canvas">
           <button class="atelier-artwork" type="button" aria-label="与画中人互动">
-            <img class="atelier-image" alt="" width="1000" height="1100" decoding="async">
+            <img class="atelier-image" alt="" width="1200" height="960" decoding="async">
             <span class="atelier-layers" aria-hidden="true"></span>
-            <span class="atelier-effects" aria-hidden="true"><i>✦</i><i>✧</i><i>✦</i><b></b><b></b><b></b></span>
-            <span class="atelier-sticker" aria-hidden="true">PLEASE TOUCH<br><em>the art.</em> ↗</span>
+            <span class="atelier-effects" aria-hidden="true"><b></b><b></b><b></b></span>
           </button>
-          <div class="atelier-switch"><button type="button" class="atelier-prev" aria-label="上一个名画场景">←</button><button type="button" class="atelier-next" aria-label="下一个名画场景">→</button></div>
           <p class="atelier-error" role="status" hidden>画面暂未加载，<button type="button">再试一次 ↗</button></p>
         </div>
-        <div class="atelier-copy"><span class="atelier-kicker">OLD MASTERS,<br>NEW HABITS.</span><span class="atelier-number">01 / 06</span><h3></h3><p class="atelier-subtitle"></p><button class="atelier-play" type="button"><span></span><i>↗</i></button><p class="atelier-note" aria-live="polite"></p><span class="atelier-credit"></span></div>
+        <div class="atelier-copy"><div class="atelier-copy-top"><span class="atelier-number">01 / 06</span><div class="atelier-switch"><button type="button" class="atelier-prev" aria-label="上一个名画场景" title="上一个名画场景">←</button><button type="button" class="atelier-next" aria-label="下一个名画场景" title="下一个名画场景">→</button></div></div><span class="atelier-kicker">A DIFFERENT KIND<br>OF STILL LIFE.</span><h3></h3><p class="atelier-subtitle"></p><p class="atelier-note" aria-live="polite"></p><button class="atelier-play" type="button"><span></span><i>↗</i></button><span class="atelier-credit"></span></div>
       </div>
-      <div class="atelier-tabs" role="tablist" aria-label="选择名画场景">${collection.scenes.map((scene,i)=>`<button type="button" role="tab" id="scene-tab-${scene.id}" aria-controls="atelier-scene" aria-selected="${i===0}" tabindex="${i===0 ? 0 : -1}" data-scene="${i}"><span>0${i+1}</span>${escape(scene.subtitle.split(' × ')[0])}<i>↗</i></button>`).join('')}</div>
-      <div class="atelier-colophon"><span>一段名画的白日梦。继续往下，看我的创作 ↓</span><details><summary>原画与拼贴来源 ↗</summary><p>原画图像经 WikiArt 获取；人物保留原画笔触，现代物件以剪贴与手绘图形加入；梵高持杯的手部剪贴取自《蒙娜丽莎》。${collection.scenes.map(s=>`<a href="${escape(s.source)}" target="_blank" rel="noopener noreferrer">${escape(s.reference)} ↗</a>`).join('')}<a href="https://www.wikiart.org/en/vincent-van-gogh/the-starry-night-1889" target="_blank" rel="noopener noreferrer">梵高《星月夜》杯身图案 ↗</a><a href="https://pngimg.com/images/technic/megaphone" target="_blank" rel="noopener noreferrer">喇叭剪贴素材：PNGimg ↗</a></p></details></div>`;
+      <div class="atelier-tabs" role="tablist" aria-label="选择名画场景">${collection.scenes.map((scene,i)=>`<button type="button" role="tab" id="scene-tab-${scene.id}" aria-controls="atelier-scene" aria-selected="${i===0}" tabindex="${i===0 ? 0 : -1}" data-scene="${i}"><img src="${escape(scene.thumbnail)}" width="360" height="288" alt="" loading="lazy"><span><small>0${i+1}</small>${escape(scene.subtitle.split(' × ')[0])}</span></button>`).join('')}</div>
+      <div class="atelier-colophon"><span>THE AFTER-HOURS COLLECTION / 六个寻常的异想</span><details><summary>原画与拼贴来源 ↗</summary><p>原画图像经 WikiArt 获取，保留画面与笔触；日常物件以独立剪贴图层加入展厅。${collection.scenes.map(s=>`<a href="${escape(s.source)}" target="_blank" rel="noopener noreferrer">${escape(s.reference)} ↗</a>`).join('')}<a href="https://www.wikiart.org/en/vincent-van-gogh/the-starry-night-1889" target="_blank" rel="noopener noreferrer">梵高《星月夜》杯身图案 ↗</a><a href="https://pngimg.com/images/technic/megaphone" target="_blank" rel="noopener noreferrer">喇叭剪贴素材：PNGimg ↗</a></p></details></div>`;
     const stage = section.querySelector('.atelier-stage');
     const canvas = section.querySelector('.atelier-canvas');
     const picture = section.querySelector('.atelier-image');
@@ -110,7 +108,7 @@
       section.querySelector('.atelier-credit').textContent = `原画 / ${scene.reference}`;
       play.querySelector('span').textContent = scene.action;
       artwork.setAttribute('aria-label',`${scene.subtitle}。${scene.action}`);
-      note.textContent = '';
+      note.textContent = scene.note;
       tabs.forEach((tab,i) => { tab.setAttribute('aria-selected',String(i===active));tab.tabIndex=i===active ? 0 : -1; });
       stage.setAttribute('aria-labelledby',tabs[active].id);
       if (focus) tabs[active].focus({preventScroll:true});
@@ -126,7 +124,7 @@
         await Promise.all(images.map(src=>{ const img=new Image();img.src=src;return img.decode(); }));
         if (sequence !== loadSequence) return;
         picture.src = scene.image;
-        picture.alt = scene.subtitle+'，彩色纸边原画拼贴';
+        picture.alt = scene.reference+'与日常物件的展厅拼贴';
         layers.innerHTML = scene.layers.map(p=>`<span class="atelier-prop prop-${escape(p.name)}" style="left:${p.x}%;top:${p.y}%;width:${p.width}%;--prop-r:${p.rotate}deg"><img src="${escape(p.src)}" alt="" ${p.activeSrc ? `data-rest-src="${escape(p.src)}" data-active-src="${escape(p.activeSrc)}"` : ''}></span>`).join('');
         ready = true;
         play.disabled = artwork.disabled = false;
