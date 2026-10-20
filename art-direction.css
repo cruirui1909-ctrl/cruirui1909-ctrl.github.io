@@ -93,3 +93,29 @@
 }
 @media(max-width:380px){.atelier-copy h3{font-size:35px}.atelier-tabs button{font-size:9px}.atelier-heading h2{font-size:28px}}
 @media(prefers-reduced-motion:reduce){.atelier-stage *{animation:none!important;transition:none!important}.atelier-effects{display:none}}
+
+.loop-studies{padding-top:30px;padding-bottom:110px;letter-spacing:0}
+.loop-heading{border-top:1px solid var(--line);padding-top:26px;margin-bottom:34px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+.loop-heading .eyebrow{letter-spacing:0;margin-bottom:16px}
+.loop-heading h2{font-size:38px;line-height:1.4;letter-spacing:0}
+.loop-edition{font-size:11px;color:var(--muted);padding-bottom:8px;white-space:nowrap}
+.study-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.study-item{min-width:0}
+.study-item .motion-figure{background:transparent}
+.study-item .motion-frame{aspect-ratio:1;border:0}
+.study-item .motion-frame img{width:100%;height:100%;object-fit:cover}
+.study-item .motion-label{font-size:10px;padding:12px 0;border-bottom:1px solid var(--line);gap:10px;flex-wrap:wrap}
+.study-item .motion-label a{white-space:nowrap}
+.study-caption{display:flex;align-items:flex-start;gap:12px;padding-top:18px}
+.study-caption>span{font:italic 14px var(--serif);color:var(--muted);padding-top:4px}
+.study-caption h3{font-size:20px;font-weight:500;letter-spacing:0;line-height:1.5}
+.study-caption p{font-size:10px;color:var(--muted);line-height:1.8;margin-top:5px}
+.study-caption>a{margin-left:auto;white-space:nowrap;font-size:10px;padding:6px 0}
+@media(max-width:760px){
+ .site-header nav{gap:16px}.site-header nav a>span{display:none}
+ .loop-studies{padding-top:15px;padding-bottom:65px}
+ .loop-heading{margin-bottom:24px;align-items:flex-start;flex-direction:column;gap:10px}
+ .loop-heading h2{font-size:28px}.loop-heading .eyebrow{font-size:9px}
+ .loop-edition{font-size:10px;padding:0}.study-grid{grid-template-columns:1fr;gap:36px}
+ .study-caption{padding-top:12px}.study-caption h3{font-size:20px}
+}

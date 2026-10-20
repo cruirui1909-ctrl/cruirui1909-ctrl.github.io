@@ -1424,6 +1424,9 @@
     }
   ],
   "assets": {
+    "study-orbit": {"id":"study-orbit","kind":"gif","width":480,"height":480,"src":"assets/studies/orbit.gif","poster":"assets/studies/orbit.webp","frames":40,"durationMs":4000},
+    "study-tide": {"id":"study-tide","kind":"gif","width":480,"height":480,"src":"assets/studies/tide.gif","poster":"assets/studies/tide.webp","frames":40,"durationMs":4000},
+    "study-menagerie": {"id":"study-menagerie","kind":"gif","width":480,"height":480,"src":"assets/studies/menagerie.gif","poster":"assets/studies/menagerie.webp","frames":40,"durationMs":4000},
     "image8": {
       "id": "image8",
       "source": "ppt/media/image8.png",

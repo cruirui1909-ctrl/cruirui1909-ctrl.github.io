@@ -170,6 +170,11 @@ function featuredMarkup(project, index) {
 
 function renderHome() {
   $('#hero-water').innerHTML = gif('image19', '马远的意境诗篇');
+  $('#study-grid').innerHTML = [
+    ['study-orbit', '碎片的轨道', '欲望之镜 / 球体拼贴'],
+    ['study-tide', '一小片潮汐', '马远的意境诗篇 / 水墨再构'],
+    ['study-menagerie', '纸上漫游', '生物炼金术 / 剪贴剧场']
+  ].map(([id,title,note],i) => `<article class="study-item">${gif(id,title,{link:true})}<div class="study-caption"><span>0${i+1}</span><div><h3>${title}</h3><p>${note}</p></div><a href="${asset(id).poster.replace('.webp','.png')}" download aria-label="下载${title}静帧">PNG ↓</a></div></article>`).join('');
   $('#featured-works').innerHTML = content.projects.filter(p => p.featured).map(featuredMarkup).join('');
   $('#filters').innerHTML = [{id:'all', label:'全部作品'}, ...content.categories].map((c,i) => `<button type="button" data-filter="${c.id}" aria-pressed="${i === 0}">${c.label}${i === 0 ? ' 11' : ''}</button>`).join('');
   $('#archive-grid').innerHTML = content.projects.map((p,i) => {
