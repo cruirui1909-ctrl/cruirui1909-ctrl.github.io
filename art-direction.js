@@ -68,12 +68,12 @@
     const actionCounts = new Map();
     const replyCounts = new Map();
     section.innerHTML = `
-      <div class="atelier-heading"><div><span class="eyebrow">AFTER HOURS / THE MUSEUM CLUB</span><h2 id="playground-title">${escape(collection.title)}</h2></div><p><span class="atelier-hours">18:01 <i></i></span>${escape(collection.subtitle)}</p></div>
+      <div class="atelier-heading"><div><span class="eyebrow">AFTER HOURS / THE MUSEUM CLUB</span><h2 id="playground-title"><span>${escape(collection.title).replace('，','，</span><span>')}</span></h2></div><p><span class="atelier-hours">18:01 <i></i></span>${escape(collection.subtitle)}</p></div>
       <div class="atelier-stage" id="atelier-scene" role="tabpanel" tabindex="0">
         <div class="atelier-canvas">
+          <img class="atelier-image" alt="" width="1600" height="1100" decoding="async">
           <div class="atelier-artwork">
-            <img class="atelier-image" alt="" width="1200" height="960" decoding="async">
-            <button class="atelier-portrait" type="button" aria-label="和画中人聊聊" title="和画中人聊聊" disabled></button>
+            <button class="atelier-portrait" type="button" aria-label="和画中人聊聊" title="和画中人聊聊" disabled><img alt="" draggable="false"></button>
             <span class="atelier-layers"></span>
             <span class="atelier-effects" aria-hidden="true"><b></b><b></b><b></b></span>
           </div>
@@ -83,7 +83,7 @@
       </div>
       <div class="atelier-tools" role="group" aria-label="展厅设置"><label><input class="atelier-original" type="checkbox">只看原画</label><label><input class="atelier-night" type="checkbox">夜间展灯</label><button class="atelier-reset" type="button" title="道具归位" aria-label="道具归位" disabled>↺</button><button class="atelier-save" type="button" disabled>保存明信片 <span aria-hidden="true">↓</span></button><span class="atelier-passport" role="status">今夜足迹 0 / 6</span></div>
       <div class="atelier-tabs" role="tablist" aria-label="选择名画场景">${collection.scenes.map((scene,i)=>`<button type="button" role="tab" id="scene-tab-${scene.id}" aria-controls="atelier-scene" aria-selected="${i===0}" tabindex="${i===0 ? 0 : -1}" data-scene="${i}"><img src="${escape(scene.thumbnail)}" width="360" height="288" alt="" loading="lazy"><span><small>0${i+1}</small>${escape(scene.subtitle.split(' × ')[0])}</span></button>`).join('')}</div>
-      <div class="atelier-colophon"><span>THE AFTER-HOURS COLLECTION / 六个寻常的异想</span><details><summary>原画与拼贴来源 ↗</summary><p>原画图像经 WikiArt 获取，保留画面与笔触；日常物件以独立剪贴图层加入展厅。${collection.scenes.map(s=>`<a href="${escape(s.source)}" target="_blank" rel="noopener noreferrer">${escape(s.reference)} ↗</a>`).join('')}<a href="https://www.wikiart.org/en/vincent-van-gogh/the-starry-night-1889" target="_blank" rel="noopener noreferrer">梵高《星月夜》杯身图案 ↗</a><a href="https://pngimg.com/images/technic/megaphone" target="_blank" rel="noopener noreferrer">喇叭剪贴素材：PNGimg ↗</a></p></details></div>`;
+      <div class="atelier-colophon"><span>THE AFTER-HOURS COLLECTION / 六个寻常的异想</span><details><summary>原画与拼贴来源 ↗</summary><p>原画图像经 WikiArt 获取，保留画面与笔触；日常物件以独立剪贴图层加入展厅。<a href="${escape(collection.backdrop.source)}" target="_blank" rel="noopener noreferrer">风景 / ${escape(collection.backdrop.reference)} ↗</a>${collection.scenes.map(s=>`<a href="${escape(s.source)}" target="_blank" rel="noopener noreferrer">${escape(s.reference)} ↗</a>`).join('')}<a href="https://www.wikiart.org/en/vincent-van-gogh/the-starry-night-1889" target="_blank" rel="noopener noreferrer">梵高《星月夜》杯身图案 ↗</a><a href="https://pngimg.com/images/technic/megaphone" target="_blank" rel="noopener noreferrer">喇叭剪贴素材：PNGimg ↗</a></p></details></div>`;
     const stage = section.querySelector('.atelier-stage');
     const canvas = section.querySelector('.atelier-canvas');
     const picture = section.querySelector('.atelier-image');
@@ -155,15 +155,19 @@
       picture.alt = '';
       layers.replaceChildren();
       try {
-        const images = [scene.image,...scene.layers.flatMap(p=>[p.src,...(p.activeSrc?[p.activeSrc]:[])])];
+        const images = [scene.image,scene.figure.src,scene.original,...scene.layers.flatMap(p=>[p.src,...(p.activeSrc?[p.activeSrc]:[])])];
         await Promise.all(images.map(src=>{ const img=new Image();img.src=src;return img.decode(); }));
         if (sequence !== loadSequence) return;
-        picture.src = scene.image;
-        picture.alt = scene.reference+'与日常物件的展厅拼贴';
+        portrait.querySelector('img').src = scene.figure.src;
+        const figure=scene.figure;
+        portrait.style.cssText=`left:${figure.x}%;top:${figure.y}%;width:${figure.width}%;height:${figure.height}%;`;
+        picture.src = original.checked ? scene.original : scene.image;
+        picture.alt = original.checked ? scene.reference : collection.backdrop.reference;
         layers.innerHTML = scene.layers.map(p=>`<button type="button" class="atelier-prop prop-${escape(p.name)}" data-home-x="${p.x}" data-home-y="${p.y}" data-rotation="${p.rotate}" style="left:${p.x}%;top:${p.y}%;width:${p.width}%;--prop-r:${p.rotate}deg" aria-label="${escape(scene.action)}：${escape(p.label)}" title="${escape(p.label)}" aria-keyshortcuts="ArrowUp ArrowDown ArrowLeft ArrowRight Home"><img src="${escape(p.src)}" alt="" draggable="false" ${p.activeSrc ? `data-rest-src="${escape(p.src)}" data-active-src="${escape(p.activeSrc)}"` : ''}></button>`).join('');
         layers.inert=original.checked;
         ready = true;
-        portrait.disabled = talk.disabled = save.disabled = reset.disabled = false;
+        talk.disabled = save.disabled = reset.disabled = false;
+        portrait.disabled = original.checked;
         play.disabled = original.checked;
         canvas.getAnimations().forEach(animation=>animation.cancel());
         if (!quiet()) canvas.animate([{opacity:.2,clipPath:'inset(0 0 0 8%)',transform:'translateY(18px)'},{opacity:1,clipPath:'inset(0)',transform:'translateY(0)'}],{duration:550,easing:'cubic-bezier(.2,.75,.2,1)'});
@@ -201,16 +205,30 @@
     original.addEventListener('change',()=>{
       resetAction();
       stage.classList.toggle('original-view',original.checked);
+      const scene=collection.scenes[active];
+      picture.src=original.checked ? scene.original : scene.image;
+      picture.alt=original.checked ? scene.reference : collection.backdrop.reference;
       layers.inert=original.checked;
+      portrait.disabled=!ready||original.checked;
       play.disabled=!ready||original.checked;
+    });
+    canvas.addEventListener('pointermove',event=>{
+      if (event.pointerType!=='mouse'||quiet()||drag||project.open) return;
+      const box=canvas.getBoundingClientRect();
+      portrait.style.setProperty('--parallax-x',`${(event.clientX-box.left-box.width/2)*.012}px`);
+      portrait.style.setProperty('--parallax-y',`${(event.clientY-box.top-box.height/2)*.008}px`);
+    },{passive:true});
+    canvas.addEventListener('pointerleave',()=>{
+      portrait.style.setProperty('--parallax-x','0px');
+      portrait.style.setProperty('--parallax-y','0px');
     });
     section.querySelector('.atelier-night').addEventListener('change',event=>stage.classList.toggle('night-view',event.target.checked));
     function moveProp(prop, dx, dy) {
-      const bounds=canvas.getBoundingClientRect(),box=prop.getBoundingClientRect();
+      const bounds=canvas.getBoundingClientRect(),box=prop.getBoundingClientRect(),plane=layers.getBoundingClientRect();
       const x=Math.max(bounds.left+3-box.left,Math.min(bounds.right-3-box.right,dx));
       const y=Math.max(bounds.top+3-box.top,Math.min(bounds.bottom-3-box.bottom,dy));
-      prop.style.left=(parseFloat(prop.style.left)+x/bounds.width*100)+'%';
-      prop.style.top=(parseFloat(prop.style.top)+y/bounds.height*100)+'%';
+      prop.style.left=(parseFloat(prop.style.left)+x/plane.width*100)+'%';
+      prop.style.top=(parseFloat(prop.style.top)+y/plane.height*100)+'%';
     }
     layers.addEventListener('pointerdown',event=>{
       const prop=event.target.closest('.atelier-prop');
@@ -252,19 +270,31 @@
       const scene=collection.scenes[active];
       save.disabled=true;
       try {
-        const postcard=document.createElement('canvas');postcard.width=1200;postcard.height=1120;
+        const bounds=canvas.getBoundingClientRect(),scale=1200/bounds.width,artHeight=Math.round(bounds.height*scale);
+        const postcard=document.createElement('canvas');postcard.width=1200;postcard.height=artHeight+160;
         const ctx=postcard.getContext('2d');
-        ctx.fillStyle='#f8f9f6';ctx.fillRect(0,0,1200,1120);
+        ctx.fillStyle='#edf1e9';ctx.fillRect(0,0,1200,postcard.height);
+        ctx.save();ctx.beginPath();ctx.rect(0,0,1200,artHeight);ctx.clip();
+        ctx.fillStyle='#18291f';ctx.fillRect(0,0,1200,artHeight);
         ctx.filter=stage.classList.contains('night-view')?'brightness(.72)':'none';
-        ctx.drawImage(picture,0,0,1200,960);
-        if (!original.checked) for (const prop of layers.children) {
-          const image=prop.querySelector('img'),w=parseFloat(prop.style.width)*12,h=w*image.naturalHeight/image.naturalWidth;
-          ctx.save();ctx.translate(parseFloat(prop.style.left)*12+w/2,parseFloat(prop.style.top)*9.6+h);
-          ctx.rotate(+prop.dataset.rotation*Math.PI/180);ctx.drawImage(image,-w/2,-h,w,h);ctx.restore();
+        function fitImage(image,x,y,w,h,cover=false) {
+          const ratio=(cover?Math.max:Math.min)(w/image.naturalWidth,h/image.naturalHeight);
+          const iw=image.naturalWidth*ratio,ih=image.naturalHeight*ratio;
+          ctx.drawImage(image,x+(w-iw)/2,y+(h-ih)/2,iw,ih);
         }
-        ctx.filter='none';ctx.fillStyle='#272d29';ctx.font='28px sans-serif';ctx.fillText(scene.title,42,1012);
-        ctx.fillStyle='#6d746d';ctx.font='18px sans-serif';ctx.fillText(scene.reference,42,1050);
-        ctx.font='15px sans-serif';ctx.fillText('CHANG RUI / AFTER HOURS · changrui.online',42,1090);
+        fitImage(picture,0,0,1200,artHeight,!original.checked);
+        if (!original.checked) {
+          const person=portrait.getBoundingClientRect(),plane=layers.getBoundingClientRect();
+          fitImage(portrait.querySelector('img'),(person.left-bounds.left)*scale,(person.top-bounds.top)*scale,person.width*scale,person.height*scale);
+          for (const prop of layers.children) {
+            const image=prop.querySelector('img'),w=parseFloat(prop.style.width)/100*plane.width*scale,h=w*image.naturalHeight/image.naturalWidth;
+            ctx.save();ctx.translate((plane.left-bounds.left+parseFloat(prop.style.left)/100*plane.width)*scale+w/2,(plane.top-bounds.top+parseFloat(prop.style.top)/100*plane.height)*scale+h);
+            ctx.rotate(+prop.dataset.rotation*Math.PI/180);ctx.drawImage(image,-w/2,-h,w,h);ctx.restore();
+          }
+        }
+        ctx.restore();ctx.fillStyle='#272d29';ctx.font='28px sans-serif';ctx.fillText(scene.title,42,artHeight+52);
+        ctx.fillStyle='#6d746d';ctx.font='18px sans-serif';ctx.fillText(scene.reference,42,artHeight+90);
+        ctx.font='15px sans-serif';ctx.fillText('CHANG RUI / AFTER HOURS · changrui.online',42,artHeight+130);
         const blob=await new Promise(resolve=>postcard.toBlob(resolve,'image/png'));
         if (!blob) throw new Error('Postcard export failed');
         const url=URL.createObjectURL(blob),link=document.createElement('a');

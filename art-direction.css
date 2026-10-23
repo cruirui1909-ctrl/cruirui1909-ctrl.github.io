@@ -40,83 +40,85 @@
 @media(max-width:760px){.kinetic-type{padding:28px 0 35px;margin:0 5% 25px}.kinetic-type>div{font-size:70px;gap:.2em}.outline-type{-webkit-text-stroke:1px var(--blue)}.reading-progress{height:2px}.hero-description{animation-delay:.25s}.project-dialog[open]{animation-duration:.3s}}
 @media(prefers-reduced-motion:reduce){.art-cursor{display:none}.kinetic-type>div{transform:none}.project-dialog[open]{animation:none}}
 
-/* Paintings and props share the gallery image's fixed 5:4 coordinate plane. */
-.playground{margin:0 0 110px;background:#f8f9f6;color:#272d29;padding:54px 6.5% 0;scroll-margin-top:0;letter-spacing:0}
+/* A shared painted landscape, with cut-paper figures on an independent plane. */
+.playground{position:relative;margin:0 0 100px;padding:0;background:#edf1e9;color:#243b2c;scroll-margin-top:0;letter-spacing:0}
 .playground[hidden]{display:none}
 .art-cursor:not(.active){visibility:hidden;transform:translate(-100px,-100px)!important}
-.atelier-heading{padding:0 0 34px;display:flex;justify-content:space-between;gap:40px;align-items:flex-end;max-width:1600px;margin:auto}
-.atelier-heading .eyebrow{color:#a44335;font-size:10px;margin-bottom:16px;letter-spacing:0}
-.atelier-heading h2{font-size:38px;letter-spacing:0;line-height:1.45}
-.atelier-heading p{font-size:11px;line-height:2;color:#6d746d;flex-shrink:0}
-.atelier-heading .atelier-hours{display:flex;align-items:center;gap:10px;color:#323a33;font:italic 24px var(--serif);margin-bottom:12px}
-.atelier-hours i{display:block;width:6px;height:6px;border-radius:50%;background:#ad4334}
-.atelier-stage{display:grid;grid-template-columns:minmax(0,1fr) 292px;gap:40px;position:relative;isolation:isolate;--scene-accent:#ad4334;max-width:1600px;margin:auto}
-.atelier-canvas{grid-column:1;grid-row:1;position:relative;aspect-ratio:5/4;min-width:0;background:#e6e3ec;overflow:hidden;align-self:start}
-.atelier-artwork{display:block;position:absolute;inset:0;padding:0;width:100%;height:100%;isolation:isolate;cursor:pointer}
-.atelier-artwork:focus-visible{outline-offset:-5px;outline:3px solid #ad4334}
-.atelier-image{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.atelier-heading{position:absolute;z-index:3;top:52px;left:6.5%;pointer-events:none;max-width:430px}
+.atelier-heading .eyebrow{font-size:10px;letter-spacing:0;color:#365642;margin-bottom:20px}
+.atelier-heading h2{font-size:42px;letter-spacing:0;line-height:1.4;font-weight:500;max-width:9em}
+.atelier-heading p{font-size:12px;line-height:2;margin-top:17px;color:#365642}
+.atelier-hours{display:inline-flex;align-items:center;gap:10px;font:italic 22px var(--serif);margin-right:18px}
+.atelier-hours i{width:7px;height:7px;background:#d63373;border-radius:50%}
+.atelier-stage{position:relative;isolation:isolate;--scene-accent:#c3336b}
+.atelier-canvas{position:relative;aspect-ratio:1600/1100;min-height:760px;max-height:1100px;overflow:hidden;background:#b7c9b6}
+.atelier-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:filter .4s}
 .atelier-image:not([src]){visibility:hidden}
+.atelier-artwork{position:absolute;inset:0;isolation:isolate}
+.atelier-canvas::after{content:"";position:absolute;inset:0;background:url("assets/atelier-v3/paper-grain.webp") repeat;opacity:.3;pointer-events:none;z-index:2}
+.atelier-portrait{position:absolute;padding:0;border:0;background:transparent;cursor:pointer;filter:drop-shadow(8px 15px 8px #12281c35)}
+.atelier-portrait img{width:100%;height:100%;object-fit:contain;transform:translate(var(--parallax-x,0px),var(--parallax-y,0px));transition:transform .55s ease;animation:paper-breathe 8s ease-in-out infinite}
+.atelier-portrait:focus-visible{outline:2px dashed #d9ee75;outline-offset:5px}
 .atelier-layers{position:absolute;inset:0;pointer-events:none}
-.atelier-prop{display:block;position:absolute;transform:rotate(var(--prop-r));filter:drop-shadow(3px 6px 4px #24263026);transform-origin:50% 100%}
-.atelier-prop img{width:100%;max-width:none;pointer-events:none}
-.atelier-portrait{position:absolute;left:12%;top:8%;width:52%;height:84%;background:transparent;cursor:pointer}
-.atelier-portrait:focus-visible{outline:2px solid #ad4334;outline-offset:-4px}
-.atelier-prop{padding:0;border:0;background:transparent;pointer-events:auto;touch-action:none;cursor:grab}
-.atelier-prop:focus-visible{outline:2px dashed #ad4334;outline-offset:6px}
-.atelier-prop.dragging{cursor:grabbing;z-index:3;filter:drop-shadow(4px 10px 7px #24263038)}
-.atelier-image{transition:filter .4s}
-.night-view .atelier-image{filter:brightness(.72)}
-.night-view .atelier-prop{filter:brightness(.85) drop-shadow(3px 6px 4px #1116)}
-.original-view .atelier-layers,.original-view .atelier-effects{visibility:hidden}
-.atelier-talk{font-size:11px;color:#5c665e;padding:12px 0;margin-top:4px;display:flex;gap:16px;align-items:center}
-.atelier-talk:hover{color:#ad4334}
-.atelier-tools{max-width:1600px;margin:20px auto 0;display:flex;align-items:center;flex-wrap:wrap;gap:12px 22px;border-top:1px solid #d9dcd4;padding-top:14px;font-size:11px;color:#59625b}
-.atelier-tools label{display:flex;align-items:center;gap:7px;cursor:pointer;min-height:36px}
-.atelier-tools input{accent-color:#ad4334;width:15px;height:15px;cursor:pointer}
-.atelier-tools button{min-height:36px;display:inline-flex;align-items:center;gap:12px}
-.atelier-tools button:hover{color:#ad4334}
-.atelier-tools button:disabled,.atelier-talk:disabled{opacity:.4;cursor:wait}
-.atelier-reset{width:36px;justify-content:center;font-size:23px}
-.atelier-passport{margin-left:auto;color:#ad4334;font-size:10px;line-height:1.7;font-variant-numeric:tabular-nums}
-.atelier-tabs button.visited::after{content:'✓';position:absolute;top:7px;right:7px;width:22px;height:22px;background:#f8f9f6;color:#ad4334;border-radius:50%;display:grid;place-items:center;font-size:12px}
-@media(max-width:760px){.atelier-tools{gap:8px 16px;font-size:10px;margin-top:18px;padding-top:10px}.atelier-passport{flex-basis:100%;margin:0}.atelier-talk{padding:10px 0;margin-top:2px}.atelier-tabs button.visited::after{width:19px;height:19px;top:5px;right:5px;font-size:10px}}
-.atelier-copy{grid-column:2;grid-row:1;padding:0 0 18px;display:flex;flex-direction:column;align-items:flex-start;min-width:0}
-.atelier-copy-top{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;border-top:1px solid #cbd0c7;padding-top:14px;margin-bottom:38px}
-.atelier-kicker{font-size:9px;letter-spacing:0;line-height:1.7;display:block;color:#7b837a}
-.atelier-number{font-family:var(--serif);font-size:19px;display:block;font-style:italic;color:var(--scene-accent)}
-.atelier-copy h3{font-weight:500;font-size:32px;letter-spacing:0;line-height:1.5;margin:18px 0 15px;min-height:96px}
+.atelier-prop{display:block;position:absolute;padding:0;border:0;background:transparent;pointer-events:auto;touch-action:none;cursor:grab;transform:rotate(var(--prop-r));transform-origin:50% 100%;filter:drop-shadow(4px 7px 3px #152b263b)}
+.atelier-prop img{display:block;width:100%;max-width:none;pointer-events:none;animation:paper-object 6s ease-in-out infinite}
+.atelier-prop:focus-visible{outline:2px dashed #e2f37c;outline-offset:6px}
+.atelier-prop.dragging{cursor:grabbing;z-index:3;filter:drop-shadow(7px 12px 5px #172b2666)}
+.atelier-prop.dragging img,.atelier-stage.acting .atelier-prop img{animation:none}
+.atelier-copy{position:absolute;z-index:3;left:6.5%;bottom:7%;width:30%;max-width:350px;display:flex;flex-direction:column;align-items:flex-start;color:#f4f7e9;text-shadow:0 1px 12px #152a22}
+.atelier-copy-top{display:flex;align-items:center;justify-content:space-between;width:100%;border-top:1px solid #f0f6e865;padding-top:14px;margin-bottom:16px}
+.atelier-number{font:italic 19px var(--serif);font-variant-numeric:tabular-nums;color:#e0f485;background:#173320bd;padding:3px 8px;text-shadow:none}
+.atelier-switch{display:flex;gap:10px}
+.atelier-switch button{display:grid;place-items:center;width:38px;height:38px;border:1px solid #edf6e87a;border-radius:50%;color:inherit;background:#13291d99;font-size:21px;text-shadow:none}
+.atelier-switch button:hover{background:#e3f383;color:#1b3526}
+.atelier-kicker{display:none}
+.atelier-copy h3{font-size:32px;font-weight:500;line-height:1.4;letter-spacing:0;margin:0 0 12px;min-height:90px}
 .atelier-copy h3 span{display:block}
-.atelier-subtitle{font-size:11px;color:#6d746d;line-height:2;min-height:44px}
-.atelier-play{margin-top:24px;color:#ad4334;font-size:12px;display:inline-flex;align-items:center;justify-content:space-between;gap:22px;border-bottom:1px solid #b87468;border-radius:0;padding:10px 0;min-width:170px;transition:color .25s}
-.atelier-play:hover{color:#262f27;border-color:#262f27}
-.atelier-play i{font-style:normal;font-size:19px}.atelier-play:disabled{opacity:.4;cursor:wait}
-.atelier-note{font-size:14px;color:#484f48;min-height:50px;margin-top:15px;line-height:1.9;max-width:19em}
-.atelier-credit{font-size:9px;line-height:1.8;color:#7b837a;max-width:28em;margin-top:auto;padding-top:30px}
-.atelier-switch{display:flex;gap:8px}
-.atelier-switch button{background:transparent;border:1px solid #ccd0c7;color:#333d34;width:34px;height:34px;border-radius:50%;font-size:19px;transition:background .2s}
-.atelier-switch button:hover{background:#e0e5dc}
-.atelier-tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px;padding:26px 0 24px;max-width:1600px;margin:auto}
-.atelier-tabs button{padding:0 0 10px;display:block;text-align:left;font-size:10px;color:#7b837a;position:relative;line-height:1.6;min-width:0;border-bottom:2px solid transparent}
-.atelier-tabs button>img{width:100%;height:auto;aspect-ratio:5/4;object-fit:cover;filter:saturate(.65);opacity:.7;transition:opacity .2s,filter .2s}
-.atelier-tabs button>span{display:flex;gap:8px;align-items:baseline;padding-top:9px;min-height:27px}
-.atelier-tabs button small{font-family:var(--serif);font-style:italic;font-size:10px}
-.atelier-tabs button:hover>img,.atelier-tabs button[aria-selected=true]>img{filter:none;opacity:1}
-.atelier-tabs button[aria-selected=true]{color:#ad4334;border-color:#ad4334}
-.atelier-colophon{border-top:1px solid #d9dcd4;padding:20px 0 25px;display:flex;justify-content:space-between;gap:30px;font-size:9px;color:#7b837a;line-height:1.8;max-width:1600px;margin:auto}
-.atelier-colophon details{max-width:380px}.atelier-colophon summary{cursor:pointer}.atelier-colophon p{padding-top:16px}.atelier-colophon a{display:block;padding:3px 0;text-decoration:underline;text-underline-offset:3px}
-.atelier-error{position:absolute;inset:0;display:grid;align-content:center;text-align:center;padding:30px;color:#ad4334;font-size:13px;background:#eeefea}.atelier-error[hidden]{display:none}.atelier-error button{text-decoration:underline;padding:12px}
+.atelier-subtitle{font-size:11px;line-height:1.8;color:#e1e9db;min-height:20px}
+.atelier-note{font-size:14px;line-height:1.9;min-height:54px;margin-top:14px;max-width:22em}
+.atelier-play{display:inline-flex;align-items:center;gap:24px;justify-content:space-between;min-width:175px;padding:12px 0 10px;margin-top:12px;color:#e3f383;border-bottom:1px solid #e3f383;font-size:12px;text-shadow:none}
+.atelier-play i{font-style:normal;font-size:20px}
+.atelier-play:hover{color:#fff;border-color:#fff}
+.atelier-play:disabled,.atelier-tools button:disabled,.atelier-talk:disabled{opacity:.4;cursor:wait}
+.atelier-talk{display:flex;align-items:center;gap:18px;font-size:11px;color:inherit;padding:14px 0;text-align:left}
+.atelier-talk:hover{color:#e3f383}
+.atelier-credit{font-size:9px;line-height:1.8;color:#e1e9db;margin-top:8px;max-width:30em}
+.night-view .atelier-image{filter:brightness(.72)}
+.night-view .atelier-portrait,.night-view .atelier-prop{filter:brightness(.85) drop-shadow(6px 10px 6px #1118)}
+.original-view .atelier-layers,.original-view .atelier-effects,.original-view .atelier-portrait{visibility:hidden}
+.original-view .atelier-canvas{background:#18291f}
+.original-view .atelier-image{object-fit:contain;width:55%;left:41%}
+.playground:has(.original-view) .atelier-heading{color:#edf5e9}
+.playground:has(.original-view) .atelier-heading p,.playground:has(.original-view) .eyebrow{color:#c8d3bd}
+.atelier-tools,.atelier-tabs,.atelier-colophon{width:87%;max-width:1680px;margin:auto}
+.atelier-tools{display:flex;align-items:center;flex-wrap:wrap;gap:12px 24px;padding:18px 0 12px;font-size:11px}
+.atelier-tools label{display:flex;align-items:center;gap:8px;min-height:36px;cursor:pointer}
+.atelier-tools input{width:15px;height:15px;accent-color:#b82762;cursor:pointer}
+.atelier-tools button{min-height:36px;display:inline-flex;align-items:center;gap:12px}
+.atelier-tools button:hover{color:#b82762}
+.atelier-reset{width:36px;justify-content:center;font-size:25px}
+.atelier-passport{margin-left:auto;font-size:10px;color:#a62558;font-variant-numeric:tabular-nums}
+.atelier-tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px;padding:14px 0 25px}
+.atelier-tabs button{position:relative;min-width:0;padding:0 0 10px;text-align:left;font-size:10px;line-height:1.7;color:#5a6d5c;border-bottom:2px solid transparent}
+.atelier-tabs button>img{width:100%;height:auto;aspect-ratio:1600/1100;object-fit:cover;opacity:.65;filter:saturate(.65);transition:opacity .2s,filter .2s}
+.atelier-tabs button>span{display:flex;gap:8px;padding-top:9px;align-items:baseline;min-height:27px}
+.atelier-tabs button small{font:italic 11px var(--serif)}
+.atelier-tabs button:hover>img,.atelier-tabs button[aria-selected=true]>img{opacity:1;filter:none}
+.atelier-tabs button[aria-selected=true]{border-color:#b82762;color:#a62558}
+.atelier-tabs button.visited::after{content:'✓';position:absolute;top:7px;right:7px;width:22px;height:22px;display:grid;place-items:center;background:#e3f383;color:#24452b;border-radius:50%;font-size:12px}
+.atelier-colophon{display:flex;justify-content:space-between;gap:25px;border-top:1px solid #cbd5c5;padding:20px 0 26px;font-size:9px;line-height:1.8;color:#5c6e5b}
+.atelier-colophon details{max-width:400px}.atelier-colophon summary{cursor:pointer}.atelier-colophon p{padding-top:15px}.atelier-colophon a{display:block;padding:3px 0;text-decoration:underline;text-underline-offset:3px}
+.atelier-error{position:absolute;inset:0;z-index:4;display:grid;align-content:center;text-align:center;padding:30px;color:#a62558;font-size:13px;background:#edf1e9}.atelier-error[hidden]{display:none}.atelier-error button{text-decoration:underline;padding:12px}
 .atelier-teaser{font-size:10px;display:inline-flex;gap:14px;margin-top:22px;padding-bottom:6px;border-bottom:1px solid #7c877966}.atelier-teaser span{color:var(--blue)}
 .atelier-effects{position:absolute;inset:0;pointer-events:none;opacity:0}
-.atelier-effects b{position:absolute;border:1px solid #ad4334;width:8%;aspect-ratio:1;left:69%;top:52%;border-radius:50%;opacity:0}
-.atelier-stage[data-effect=shout].acting .atelier-effects{opacity:1}.atelier-stage[data-effect=shout].acting .atelier-effects b{animation:atelier-wave 1.6s both}.atelier-stage[data-effect=shout].acting .atelier-effects b:nth-of-type(2){animation-delay:.3s}.atelier-stage[data-effect=shout].acting .atelier-effects b:nth-of-type(3){animation-delay:.6s}
+.atelier-effects b{position:absolute;border:2px solid #e8fa8d;width:8%;aspect-ratio:1;left:62%;top:38%;border-radius:50%;opacity:0}
+.atelier-stage[data-effect=shout].acting .atelier-effects{opacity:1}.atelier-stage[data-effect=shout].acting .atelier-effects b{animation:atelier-wave 1.6s both}.atelier-stage[data-effect=shout].acting .atelier-effects b:nth-child(2){animation-delay:.3s}.atelier-stage[data-effect=shout].acting .atelier-effects b:nth-child(3){animation-delay:.6s}
 .atelier-stage[data-effect=sip].acting .atelier-effects,.atelier-stage[data-effect=stars].acting .atelier-effects{opacity:1}
-.atelier-stage[data-effect=sip].acting .atelier-effects b{width:1.5%;left:79%;top:48%;background:#75502f;border:0;animation:atelier-bubble 1.8s both}
-.atelier-stage[data-effect=sip].acting .atelier-effects b:nth-child(2){left:83%;animation-delay:.25s}.atelier-stage[data-effect=sip].acting .atelier-effects b:nth-child(3){left:86%;animation-delay:.5s}
-.atelier-stage[data-effect=stars].acting .atelier-effects b{width:auto;border:0;left:77%;top:42%;color:#bc963b;font:24px var(--serif);animation:atelier-spark 2.4s both}
+.atelier-stage[data-effect=sip].acting .atelier-effects b{width:1.3%;left:51%;top:48%;background:#e8fa8d;border:0;animation:atelier-bubble 1.8s both}
+.atelier-stage[data-effect=sip].acting .atelier-effects b:nth-child(2){left:54%;animation-delay:.25s}.atelier-stage[data-effect=sip].acting .atelier-effects b:nth-child(3){left:57%;animation-delay:.5s}
+.atelier-stage[data-effect=stars].acting .atelier-effects b{width:auto;border:0;left:54%;top:51%;color:#e8fa8d;font:28px var(--serif);animation:atelier-spark 2.4s both}
 .atelier-stage[data-effect=stars].acting .atelier-effects b::before{content:'✦'}
-.atelier-stage[data-effect=stars].acting .atelier-effects b:nth-child(2){left:85%;top:34%;animation-delay:.2s}.atelier-stage[data-effect=stars].acting .atelier-effects b:nth-child(3){left:90%;top:47%;animation-delay:.4s}
-@keyframes atelier-bubble{0%{opacity:0;translate:0 0}30%{opacity:.8}100%{opacity:0;translate:0 -35px}}
-@keyframes atelier-spark{0%,100%{opacity:0;scale:.4}45%{opacity:1;scale:1;rotate:35deg}}
+.atelier-stage[data-effect=stars].acting .atelier-effects b:nth-child(2){left:71%;top:45%;animation-delay:.2s}.atelier-stage[data-effect=stars].acting .atelier-effects b:nth-child(3){left:77%;top:63%;animation-delay:.4s}
 .atelier-stage.acting .atelier-note{animation:note-in .45s both}
 .atelier-stage.acting .prop-tea{animation:tea-sip 2.4s ease both}
 .atelier-stage.acting .prop-cup{animation:cup-lift 2.4s ease both}
@@ -125,9 +127,13 @@
 .atelier-stage.acting .prop-megaphone{animation:megaphone-shout .28s ease 6}
 .atelier-stage.acting .prop-bottle{animation:bottle-toast 2.4s ease both}.atelier-stage.acting .prop-glass{animation:glass-toast 2.4s ease both}
 .atelier-stage:not(.in-view) *,.atelier-stage.paused *{animation-play-state:paused!important}
-.reduced-motion .atelier-stage *{animation:none!important;transition:none!important}.reduced-motion .atelier-effects{display:none}
+.reduced-motion .atelier-stage *{animation:none!important;transition:none!important}.reduced-motion .atelier-portrait img{transform:none}.reduced-motion .atelier-effects{display:none}
+@keyframes paper-breathe{0%,100%{translate:0 0;rotate:-.5deg}50%{translate:0 -7px;rotate:.5deg}}
+@keyframes paper-object{0%,100%{translate:0 0}50%{translate:0 -5px}}
+@keyframes atelier-bubble{0%{opacity:0;translate:0 0}30%{opacity:.8}100%{opacity:0;translate:0 -35px}}
+@keyframes atelier-spark{0%,100%{opacity:0;scale:.4}45%{opacity:1;scale:1;rotate:35deg}}
 @keyframes atelier-wave{0%{opacity:.9;scale:.3}100%{opacity:0;scale:2.4}}
-@keyframes note-in{from{opacity:0;translate:0 8px;rotate:-3deg}to{opacity:1;translate:0 0;rotate:0}}
+@keyframes note-in{from{opacity:0;translate:0 8px}to{opacity:1;translate:0 0}}
 @keyframes tea-sip{0%,100%{rotate:0deg}35%,65%{rotate:3deg}50%{rotate:-3deg}}
 @keyframes cup-lift{0%,100%{translate:0 0;rotate:0deg}45%,60%{translate:0 -7%;rotate:3deg}}
 @keyframes apple-bite{0%,100%{scale:1;rotate:0deg}35%{scale:.93;rotate:8deg}65%{scale:1.08;rotate:-5deg}}
@@ -135,16 +141,38 @@
 @keyframes megaphone-shout{0%,100%{translate:0 0;rotate:0deg}50%{translate:2% -2%;rotate:3deg}}
 @keyframes bottle-toast{0%,100%{rotate:0deg}40%,60%{rotate:-5deg;translate:-2% -3%}}
 @keyframes glass-toast{0%,100%{translate:0 0;rotate:0deg}40%,60%{translate:10% -15%;rotate:5deg}}
-@media(max-width:1100px){.atelier-stage{grid-template-columns:minmax(0,1fr) 240px;gap:24px}.atelier-copy-top{margin-bottom:22px}.atelier-copy h3{font-size:27px;min-height:81px}.atelier-note{font-size:12px}.atelier-play{margin-top:10px}.atelier-tabs{gap:12px}}
+@media(max-width:1100px) and (min-width:761px){.atelier-heading{left:5%;top:40px;max-width:310px}.atelier-heading h2{font-size:34px}.atelier-copy{left:5%;width:30%;bottom:6%}.atelier-copy h3{font-size:28px;min-height:80px}.atelier-note{font-size:12px}}
 @media(max-width:760px){
- .art-cursor{display:none}
- .collage-star{right:7%}
- .playground{margin-bottom:70px;padding:32px 5% 0}.atelier-heading{padding:0 0 24px;display:block}.atelier-heading .eyebrow{font-size:8px}.atelier-heading h2{font-size:27px}.atelier-heading p{font-size:10px;margin-top:12px;display:flex;gap:14px;align-items:center}.atelier-heading .atelier-hours{font-size:18px;margin:0;gap:7px}
- .atelier-stage{grid-template-columns:1fr;gap:20px}.atelier-canvas{grid-column:1;grid-row:1}.atelier-copy{grid-column:1;grid-row:2;padding:0;position:relative}.atelier-copy-top{margin-bottom:15px;padding-top:10px}.atelier-number{font-size:16px}.atelier-kicker{display:none}.atelier-copy h3{font-size:26px;min-height:0;margin:0 0 10px;line-height:1.5}.atelier-copy h3 span{display:inline}.atelier-subtitle{font-size:10px;min-height:0}.atelier-note{font-size:12px;margin-top:10px;min-height:0;max-width:none}.atelier-play{margin-top:10px;font-size:11px;min-width:150px}.atelier-credit{font-size:8px;margin-top:0;padding-top:18px}
- .atelier-tabs{grid-template-columns:repeat(3,minmax(0,1fr));padding:23px 0 20px;gap:16px 12px}.atelier-tabs button{font-size:9px;padding-bottom:6px}.atelier-tabs button>span{gap:5px;min-height:22px}.atelier-tabs button small{font-size:9px}.atelier-colophon{display:block;font-size:8px;padding:18px 0 24px}.atelier-colophon details{margin-top:10px}.atelier-teaser{font-size:8px;margin-top:13px;gap:8px}
+ .art-cursor{display:none}.collage-star{right:7%}
+ .playground{margin-bottom:65px}
+ .atelier-heading{left:5%;top:24px;max-width:205px}
+ .atelier-heading .eyebrow{font-size:7px;margin-bottom:12px}
+ .atelier-heading h2{font-size:27px;max-width:5.3em;line-height:1.4}
+ .atelier-heading h2 span{display:block;white-space:nowrap;text-shadow:0 1px 6px #edf1e9,0 1px 2px #edf1e9}
+ .atelier-heading p{font-size:9px;margin-top:12px;max-width:18em;color:#f0f6e8;text-shadow:0 1px 4px #152a22,0 1px 2px #152a22}
+ .atelier-hours{font-size:17px;display:flex;margin:0 0 3px;gap:7px}.atelier-hours i{width:5px;height:5px}
+ .atelier-canvas{aspect-ratio:1/1.15;min-height:0;max-height:none}
+ .atelier-artwork{width:145%;height:83%;left:-34%;top:17%;right:auto;bottom:auto}
+ .atelier-copy{position:relative;inset:auto;width:90%;max-width:none;margin:0 auto;padding:21px 0 0;color:#243b2c;text-shadow:none}
+ .atelier-copy-top{border-color:#c5d2bf;margin-bottom:14px;padding-top:0}
+ .atelier-number{color:#a62558;font-size:17px;background:transparent;padding:0}
+ .atelier-switch button{border-color:#a8b9a0;background:transparent;width:36px;height:36px}
+ .atelier-copy h3{font-size:27px;min-height:0;margin:0 0 9px}.atelier-copy h3 span{display:inline}
+ .atelier-subtitle{font-size:10px;color:#5b705b;min-height:0}.atelier-note{font-size:13px;min-height:50px;margin-top:11px;max-width:none}
+ .atelier-play{color:#a62558;border-color:#a62558;margin-top:2px;min-width:165px;font-size:11px}.atelier-play:hover{color:#24452b;border-color:#24452b}
+ .atelier-talk{font-size:11px;padding:14px 0 9px}.atelier-talk:hover{color:#a62558}.atelier-credit{font-size:8px;color:#5b705b;margin-top:8px}
+ .atelier-tools,.atelier-tabs,.atelier-colophon{width:90%}
+ .atelier-tools{gap:8px 17px;font-size:10px;margin-top:19px;border-top:1px solid #c5d2bf;padding:10px 0}.atelier-passport{flex-basis:100%;margin-left:0}
+ .atelier-tabs{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 12px;padding:13px 0 22px}
+ .atelier-tabs button{font-size:9px;padding-bottom:6px}.atelier-tabs button>span{gap:5px;min-height:22px}.atelier-tabs button small{font-size:9px}
+ .atelier-tabs button.visited::after{width:19px;height:19px;font-size:10px;top:5px;right:5px}
+ .atelier-colophon{display:block;font-size:8px;padding:17px 0 24px}.atelier-colophon details{margin-top:10px}
+ .original-view .atelier-artwork{inset:0;width:100%;height:100%}
+ .original-view .atelier-image{inset:0;width:100%;padding:125px 15px 12px}
+ .atelier-teaser{font-size:8px;margin-top:13px;gap:8px}
 }
-@media(max-width:380px){.atelier-heading h2{font-size:24px}.atelier-copy h3{font-size:23px}}
-@media(prefers-reduced-motion:reduce){.atelier-stage *{animation:none!important;transition:none!important}.atelier-effects{display:none}}
+@media(max-width:380px){.atelier-heading h2{font-size:24px}.atelier-heading{max-width:180px}.atelier-copy h3{font-size:24px}}
+@media(prefers-reduced-motion:reduce){.atelier-stage *{animation:none!important;transition:none!important}.atelier-portrait img{transform:none}.atelier-effects{display:none}}
 
 .loop-studies{padding-top:30px;padding-bottom:110px;letter-spacing:0}
 .feature-comic-opening .feature-art{aspect-ratio:1692/720;background:#131614}

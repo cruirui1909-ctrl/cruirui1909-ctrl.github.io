@@ -8,12 +8,20 @@
       "title": "珍珠，还是加珍珠？",
       "subtitle": "戴珍珠耳环的少女 × 一杯奶茶",
       "reference": "维米尔《戴珍珠耳环的少女》",
-      "image": "assets/atelier-v2/pearl-tea.webp",
+      "image": "assets/atelier-v3/landscape.webp",
       "accent": "#ad4334",
       "note": "今天的珍珠，不止耳边那一颗。",
       "action": "珍珠摇一摇",
-      "responses": ["杯底的珍珠醒了，今天也要甜一点。", "三分糖，七分好心情。", "这一杯，敬终于下班的自己。"],
-      "replies": ["耳边的珍珠不能吃，杯里的可以。", "今天不用站得那么端正，坐一会儿吧。", "我等的不是画家，是奶茶到了的消息。"],
+      "responses": [
+        "杯底的珍珠醒了，今天也要甜一点。",
+        "三分糖，七分好心情。",
+        "这一杯，敬终于下班的自己。"
+      ],
+      "replies": [
+        "耳边的珍珠不能吃，杯里的可以。",
+        "今天不用站得那么端正，坐一会儿吧。",
+        "我等的不是画家，是奶茶到了的消息。"
+      ],
       "moveNote": "换个位置，奶茶还是要放在手边。",
       "effect": "sip",
       "layers": [
@@ -21,31 +29,47 @@
           "name": "tea",
           "label": "珍珠奶茶",
           "src": "assets/atelier-v2/tea.webp",
-          "x": 72.83333333333333,
-          "y": 35.41666666666667,
-          "width": 18,
-          "rotate": -5
+          "x": 48,
+          "y": 49,
+          "width": 15,
+          "rotate": -20
         }
       ],
       "source": "https://www.wikiart.org/en/johannes-vermeer/the-girl-with-a-pearl-earring",
-      "method": "原画完整展陈 + 独立日常物件剪贴",
+      "method": "原画人物抠图 + 古典风景 + 现代物件拼贴",
       "titleLines": [
         "珍珠，",
         "还是加珍珠？"
       ],
-      "thumbnail": "assets/atelier-v2/pearl-tea-thumb.webp"
+      "thumbnail": "assets/atelier-v3/pearl-tea-thumb.webp",
+      "original": "assets/atelier-v3/pearl-tea-original.webp",
+      "figure": {
+        "src": "assets/atelier-v3/pearl-tea-figure.webp",
+        "x": 49.394,
+        "y": 12,
+        "width": 37.212,
+        "height": 84
+      }
     },
     {
       "id": "van-gogh-cup",
       "title": "灵感，先续一杯。",
       "subtitle": "梵高 × 星空图案的杯子",
       "reference": "梵高自画像与《星月夜》",
-      "image": "assets/atelier-v2/van-gogh-cup.webp",
+      "image": "assets/atelier-v3/landscape.webp",
       "accent": "#ad4334",
       "note": "等咖啡凉一点，再去画星星。",
       "action": "给灵感续杯",
-      "responses": ["第一口咖啡，星星开始有了形状。", "第二口，今晚的蓝色又深了一点。", "灵感续好了，画布可以明天再买。"],
-      "replies": ["天上的星星，也需要偶尔放个假。", "别急着找灵感，先把咖啡喝完。", "如果今晚失眠，就把夜色画下来。"],
+      "responses": [
+        "第一口咖啡，星星开始有了形状。",
+        "第二口，今晚的蓝色又深了一点。",
+        "灵感续好了，画布可以明天再买。"
+      ],
+      "replies": [
+        "天上的星星，也需要偶尔放个假。",
+        "别急着找灵感，先把咖啡喝完。",
+        "如果今晚失眠，就把夜色画下来。"
+      ],
       "moveNote": "杯子挪一挪，给新画布腾个位置。",
       "effect": "stars",
       "layers": [
@@ -53,31 +77,47 @@
           "name": "cup",
           "label": "星空咖啡杯",
           "src": "assets/atelier-v2/starry-cup.webp",
-          "x": 70.33333333333333,
-          "y": 51.43862612612613,
+          "x": 49,
+          "y": 60,
           "width": 23,
-          "rotate": -7
+          "rotate": 10
         }
       ],
       "source": "https://www.wikiart.org/en/vincent-van-gogh/self-portrait-1889",
-      "method": "原画完整展陈 + 独立日常物件剪贴",
+      "method": "原画人物抠图 + 古典风景 + 现代物件拼贴",
       "titleLines": [
         "灵感，",
         "先续一杯。"
       ],
-      "thumbnail": "assets/atelier-v2/van-gogh-cup-thumb.webp"
+      "thumbnail": "assets/atelier-v3/van-gogh-cup-thumb.webp",
+      "original": "assets/atelier-v3/van-gogh-cup-original.webp",
+      "figure": {
+        "src": "assets/atelier-v3/van-gogh-cup-figure.webp",
+        "x": 45.186,
+        "y": 12,
+        "width": 45.628,
+        "height": 84
+      }
     },
     {
       "id": "magritte-apple",
       "title": "这一次，苹果可以吃。",
       "subtitle": "《人类之子》 × 一口青苹果",
       "reference": "马格利特《人类之子》",
-      "image": "assets/atelier-v2/magritte-apple.webp",
+      "image": "assets/atelier-v3/landscape.webp",
       "accent": "#ad4334",
       "note": "超现实之外，也要补充维生素。",
       "action": "咬一口苹果",
-      "responses": ["咔嚓。今天的超现实，有一点清脆。", "这不是一幅苹果，这是我的夜宵。", "面前的谜题，少了一小口。"],
-      "replies": ["帽子还在，苹果怎么跑到旁边去了？", "有时候，遮住脸也是一种社交礼仪。", "你看到的是苹果，我想到的是晚餐。"],
+      "responses": [
+        "咔嚓。今天的超现实，有一点清脆。",
+        "这不是一幅苹果，这是我的夜宵。",
+        "面前的谜题，少了一小口。"
+      ],
+      "replies": [
+        "帽子还在，苹果怎么跑到旁边去了？",
+        "有时候，遮住脸也是一种社交礼仪。",
+        "你看到的是苹果，我想到的是晚餐。"
+      ],
       "moveNote": "苹果换了位置，谜题也换了一个问法。",
       "effect": "bite",
       "layers": [
@@ -85,32 +125,48 @@
           "name": "apple",
           "label": "青苹果",
           "src": "assets/atelier-v2/apple.webp",
-          "x": 74.83333333333333,
-          "y": 55.677267373380445,
-          "width": 14,
-          "rotate": 0,
+          "x": 62,
+          "y": 20,
+          "width": 13,
+          "rotate": -7,
           "activeSrc": "assets/atelier-v2/apple-bitten.webp"
         }
       ],
       "source": "https://www.wikiart.org/en/rene-magritte/the-son-of-man-1964",
-      "method": "原画完整展陈 + 独立日常物件剪贴",
+      "method": "原画人物抠图 + 古典风景 + 现代物件拼贴",
       "titleLines": [
         "这一次，",
         "苹果可以吃。"
       ],
-      "thumbnail": "assets/atelier-v2/magritte-apple-thumb.webp"
+      "thumbnail": "assets/atelier-v3/magritte-apple-thumb.webp",
+      "original": "assets/atelier-v3/magritte-apple-original.webp",
+      "figure": {
+        "src": "assets/atelier-v3/magritte-apple-figure.webp",
+        "x": 53.926500000000004,
+        "y": 12,
+        "width": 28.147,
+        "height": 84
+      }
     },
     {
       "id": "mona-curls",
       "title": "五百年了，换个造型。",
       "subtitle": "蒙娜丽莎 × 卷发棒",
       "reference": "达·芬奇《蒙娜丽莎》",
-      "image": "assets/atelier-v2/mona-curls.webp",
+      "image": "assets/atelier-v3/landscape.webp",
       "accent": "#ad4334",
       "note": "微笑照旧，发型待定。",
       "action": "卷起新心情",
-      "responses": ["刘海向左，心情向右。", "今天的微笑，配一个新弧度。", "五百年的定型，今晚松一松。"],
-      "replies": ["他们研究我的微笑，我只想研究一下刘海。", "预约了五百年的理发师，终于有空了。", "今天的造型，你觉得怎么样？"],
+      "responses": [
+        "刘海向左，心情向右。",
+        "今天的微笑，配一个新弧度。",
+        "五百年的定型，今晚松一松。"
+      ],
+      "replies": [
+        "他们研究我的微笑，我只想研究一下刘海。",
+        "预约了五百年的理发师，终于有空了。",
+        "今天的造型，你觉得怎么样？"
+      ],
       "moveNote": "造型师到位，今晚的发型由你决定。",
       "effect": "curl",
       "layers": [
@@ -118,31 +174,47 @@
           "name": "curler",
           "label": "卷发棒",
           "src": "assets/atelier-v2/curler.webp",
-          "x": 75.83333333333333,
-          "y": 12.52283105022831,
-          "width": 12,
-          "rotate": 10
+          "x": 70,
+          "y": 24,
+          "width": 11,
+          "rotate": 16
         }
       ],
       "source": "https://www.wikiart.org/en/leonardo-da-vinci/mona-lisa",
-      "method": "原画完整展陈 + 独立日常物件剪贴",
+      "method": "原画人物抠图 + 古典风景 + 现代物件拼贴",
       "titleLines": [
         "五百年了，",
         "换个造型。"
       ],
-      "thumbnail": "assets/atelier-v2/mona-curls-thumb.webp"
+      "thumbnail": "assets/atelier-v3/mona-curls-thumb.webp",
+      "original": "assets/atelier-v3/mona-curls-original.webp",
+      "figure": {
+        "src": "assets/atelier-v3/mona-curls-figure.webp",
+        "x": 47.8915,
+        "y": 12,
+        "width": 40.217,
+        "height": 84
+      }
     },
     {
       "id": "night-watch",
       "title": "闭馆以后，小声一点。",
       "subtitle": "夜巡队 × 大喇叭",
       "reference": "伦勃朗《夜巡》",
-      "image": "assets/atelier-v2/night-watch.webp",
+      "image": "assets/atelier-v3/landscape.webp",
       "accent": "#ad4334",
       "note": "巡逻结束，今晚提前下班。",
       "action": "唤起无声声浪",
-      "responses": ["各位，今晚不用加班。", "集合完毕，下一站是夜宵摊。", "巡逻队已收到：小声一点，别吵醒隔壁。"],
-      "replies": ["白天排队看我们，晚上轮到我们排夜宵。", "喇叭只是借来的，音量已经调到最小。", "今晚的巡逻路线，经过咖啡机。"],
+      "responses": [
+        "各位，今晚不用加班。",
+        "集合完毕，下一站是夜宵摊。",
+        "巡逻队已收到：小声一点，别吵醒隔壁。"
+      ],
+      "replies": [
+        "白天排队看我们，晚上轮到我们排夜宵。",
+        "喇叭只是借来的，音量已经调到最小。",
+        "今晚的巡逻路线，经过咖啡机。"
+      ],
       "moveNote": "喇叭换个方向，今晚的集合地点也变了。",
       "effect": "shout",
       "layers": [
@@ -150,31 +222,47 @@
           "name": "megaphone",
           "label": "集合喇叭",
           "src": "assets/atelier-v2/megaphone.webp",
-          "x": 70.33333333333333,
-          "y": 55.65885416666667,
-          "width": 23,
-          "rotate": -8
+          "x": 62,
+          "y": 35,
+          "width": 22,
+          "rotate": -13
         }
       ],
       "source": "https://www.wikiart.org/en/rembrandt/the-nightwatch-1642",
-      "method": "原画完整展陈 + 独立日常物件剪贴",
+      "method": "原画人物抠图 + 古典风景 + 现代物件拼贴",
       "titleLines": [
         "闭馆以后，",
         "小声一点。"
       ],
-      "thumbnail": "assets/atelier-v2/night-watch-thumb.webp"
+      "thumbnail": "assets/atelier-v3/night-watch-thumb.webp",
+      "original": "assets/atelier-v3/night-watch-original.webp",
+      "figure": {
+        "src": "assets/atelier-v3/night-watch-figure.webp",
+        "x": 42.7935,
+        "y": 12,
+        "width": 50.413,
+        "height": 84
+      }
     },
     {
       "id": "qianlong-toast",
       "title": "隔着时空，碰个杯。",
       "subtitle": "乾隆 × 北京二锅头",
       "reference": "郎世宁《乾隆皇帝肖像》",
-      "image": "assets/atelier-v2/qianlong-toast.webp",
+      "image": "assets/atelier-v3/landscape.webp",
       "accent": "#ad4334",
       "note": "宫廷之外，也有寻常日子。",
       "action": "隔空碰杯",
-      "responses": ["这一杯，敬今天的相遇。", "隔着几百年，也能碰个杯。", "今晚不谈奏折，只谈寻常日子。"],
-      "replies": ["宫里的杯子太讲究，今天换个随意的。", "今晚没有早朝，可以慢慢聊。", "这幅肖像画完，终于可以歇一会儿了。"],
+      "responses": [
+        "这一杯，敬今天的相遇。",
+        "隔着几百年，也能碰个杯。",
+        "今晚不谈奏折，只谈寻常日子。"
+      ],
+      "replies": [
+        "宫里的杯子太讲究，今天换个随意的。",
+        "今晚没有早朝，可以慢慢聊。",
+        "这幅肖像画完，终于可以歇一会儿了。"
+      ],
       "moveNote": "杯子摆好了，老朋友也该入座了。",
       "effect": "toast",
       "layers": [
@@ -182,28 +270,40 @@
           "name": "bottle",
           "label": "二锅头酒瓶",
           "src": "assets/atelier-v2/erguotou.webp",
-          "x": 75.33333333333333,
-          "y": 33.71023513139696,
-          "width": 13,
-          "rotate": 0
+          "x": 76,
+          "y": 48,
+          "width": 12,
+          "rotate": -13
         },
         {
           "name": "glass",
           "label": "小酒杯",
           "src": "assets/atelier-v2/shot-glass.webp",
-          "x": 66,
-          "y": 62,
+          "x": 55,
+          "y": 52,
           "width": 9,
-          "rotate": -5
+          "rotate": -10
         }
       ],
       "source": "https://www.wikiart.org/en/giuseppe-castiglione-lang-shi-zhu-lang-shining/emperor-qianlong",
-      "method": "原画完整展陈 + 独立日常物件剪贴",
+      "method": "原画人物抠图 + 古典风景 + 现代物件拼贴",
       "titleLines": [
         "隔着时空，",
         "碰个杯。"
       ],
-      "thumbnail": "assets/atelier-v2/qianlong-toast-thumb.webp"
+      "thumbnail": "assets/atelier-v3/qianlong-toast-thumb.webp",
+      "original": "assets/atelier-v3/qianlong-toast-original.webp",
+      "figure": {
+        "src": "assets/atelier-v3/qianlong-toast-figure.webp",
+        "x": 43.079,
+        "y": 12,
+        "width": 49.842,
+        "height": 84
+      }
     }
-  ]
+  ],
+  "backdrop": {
+    "reference": "克洛德·洛兰《埃涅阿斯在提洛岛的风景》",
+    "source": "https://www.wikiart.org/en/claude-lorrain/landscape-with-aeneas-at-delos-1672"
+  }
 }
