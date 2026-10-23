@@ -50,7 +50,7 @@
   paintScroll();
 
   async function initAtelier() {
-    const response = await fetch('atelier.json');
+    const response = await fetch('atelier.json?v=paper-theatre-1');
     if (!response.ok) return;
     const collection = await response.json();
     if (!collection.ready || collection.scenes.length !== 6) return;
