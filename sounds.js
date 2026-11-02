@@ -18,7 +18,7 @@ window.CloudSound = (() => {
   ];
   const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
   const interactionGaps={bubble:0,ripple:.30,halo:.65,brush:.24,pulse:.18,travel:.30,uiHover:.12,uiClick:.07};
-  function create(context,output,onCue){
+  function create(context,output,onCue,onForeground){
     const rate=context.sampleRate,master=context.createGain(),compressor=context.createDynamicsCompressor(),analyser=context.createAnalyser();
     compressor.threshold.value=-15;compressor.knee.value=12;compressor.ratio.value=4;compressor.attack.value=.004;compressor.release.value=.18;
     analyser.fftSize=1024;master.gain.value=0;master.connect(compressor);compressor.connect(analyser);analyser.connect(output);
@@ -106,6 +106,7 @@ window.CloudSound = (() => {
       if(gap&&when-(lastEvents[key]??-100)<gap)return;
       lastEvents[key]=when;events[name]=(events[name]||0)+1;
       if(onCue&&(key==='bubble'||key==='water'||key==='thunder')){onCue(key);return;}
+      onForeground?.(name);
       const power=clamp(strength,0,1)*clamp(1/(1+depth*.012),.4,1),note=440*2**([0,2,4,7,9][index%5]/12);
       if(name==='ratchet'){noise(2350,1.3,.23,when,.037,0,g);tone(1050,530,.027,when,.035,0,g,'triangle');}
       else if(name==='roll'){noise(720,.8,.18,when,.085,(random()-.5)*.3,g);tone(410,285,.028,when,.075,0,g);}
@@ -180,6 +181,7 @@ window.CloudSound = (() => {
         motionAir?.gain.setTargetAtTime(.012*motion*(inputSurface==='water'?0:1)+.085*cameraMotion,now,.055);
         if(cameraMotion>.04&&!cameraMoving)event('travel',now,{strength:.5+cameraMotion*.5});
         cameraMoving=cameraMotion>.04;
+        if(cameraMoving)onForeground?.('travel');
         if(mechanism)mechanism.bus.gain.setTargetAtTime(index===0?clamp(Math.abs(hopperSpeed)/1.4,0,1):0,now,.065);
         if(index===0){
           if(angle>=previousAngle){for(let i=Math.floor(previousAngle/9)+1;i<=Math.floor(angle/9);i++)event('ratchet',now+(i-Math.floor(previousAngle/9)-1)*.008);}

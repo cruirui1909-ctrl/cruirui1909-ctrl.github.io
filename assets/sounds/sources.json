@@ -26,114 +26,180 @@
     "processing": "Trimmed, filtered, faded and level-balanced; original source and license pages in source/"
   },
   "piano/48.mp3": {
-    "midi": 48,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 48,
+    "midi": 72,
+    "fundamentalHz": 523.2511,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/49.mp3": {
-    "midi": 49,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 49,
+    "midi": 73,
+    "fundamentalHz": 554.3653,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/50.mp3": {
-    "midi": 50,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 50,
+    "midi": 74,
+    "fundamentalHz": 587.3295,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/51.mp3": {
-    "midi": 51,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 51,
+    "midi": 75,
+    "fundamentalHz": 622.254,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/52.mp3": {
-    "midi": 52,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 52,
+    "midi": 76,
+    "fundamentalHz": 659.2551,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/53.mp3": {
-    "midi": 53,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 53,
+    "midi": 77,
+    "fundamentalHz": 698.4565,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/54.mp3": {
-    "midi": 54,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 54,
+    "midi": 78,
+    "fundamentalHz": 739.9888,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/55.mp3": {
-    "midi": 55,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 55,
+    "midi": 79,
+    "fundamentalHz": 783.9909,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/56.mp3": {
-    "midi": 56,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 56,
+    "midi": 80,
+    "fundamentalHz": 830.6094,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/57.mp3": {
-    "midi": 57,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 57,
+    "midi": 81,
+    "fundamentalHz": 880.0,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/58.mp3": {
-    "midi": 58,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 58,
+    "midi": 82,
+    "fundamentalHz": 932.3275,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/59.mp3": {
-    "midi": 59,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 59,
+    "midi": 83,
+    "fundamentalHz": 987.7666,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/60.mp3": {
-    "midi": 60,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 60,
+    "midi": 84,
+    "fundamentalHz": 1046.5023,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/61.mp3": {
-    "midi": 61,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 61,
+    "midi": 85,
+    "fundamentalHz": 1108.7305,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/62.mp3": {
-    "midi": 62,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 62,
+    "midi": 86,
+    "fundamentalHz": 1174.6591,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/63.mp3": {
-    "midi": 63,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 63,
+    "midi": 87,
+    "fundamentalHz": 1244.5079,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/64.mp3": {
-    "midi": 64,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 64,
+    "midi": 88,
+    "fundamentalHz": 1318.5102,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/65.mp3": {
-    "midi": 65,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 65,
+    "midi": 89,
+    "fundamentalHz": 1396.9129,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/66.mp3": {
-    "midi": 66,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 66,
+    "midi": 90,
+    "fundamentalHz": 1479.9777,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/67.mp3": {
-    "midi": 67,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 67,
+    "midi": 91,
+    "fundamentalHz": 1567.9817,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/68.mp3": {
-    "midi": 68,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 68,
+    "midi": 92,
+    "fundamentalHz": 1661.2188,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "piano/69.mp3": {
-    "midi": 69,
-    "duration": 2.15,
-    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+    "columnId": 69,
+    "midi": 93,
+    "fundamentalHz": 1760.0,
+    "duration": 3.2,
+    "source": "Original procedural wind chime; build-cues.py; no third-party samples",
+    "processing": "Five damped resonant partials, soft 3.5 ms strike, short stereo reflections and a tapered tail; peak normalized to 0.58"
   },
   "rain.mp3": {
     "duration": 37.513,

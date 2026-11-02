@@ -8,11 +8,11 @@
   <meta name="description" content="云彩没有尾巴 · 十二场风。沿着水与光，开启十二星座的互动天气。">
   <title>云彩没有尾巴 · 十二场风</title>
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="style.css?v=clouds-v19-20261102">
+  <link rel="stylesheet" href="style.css?v=clouds-v23-20261102">
 </head>
 <body>
   <main id="experience" aria-label="云彩没有尾巴，互动星座扭蛋馆">
-    <canvas id="scene" tabindex="0" aria-label="夕阳琴廊。首次点击画面开启声音，鼠标碰到黑白琴柱弹奏不同琴音。滚轮走近扭蛋机，按住空格转动旋钮，点击落下的扭蛋。星景中移动鼠标点亮白昼，滚轮穿行。"></canvas>
+    <canvas id="scene" tabindex="0" aria-label="夕阳琴廊。声音默认开启，浏览器限制自动播放时首次点击或按键自动开始。鼠标碰到黑白琴柱，发出清亮风铃音，对应的哥特风格音名字符微亮。滚轮向前推走近扭蛋机，向后拉退回，按住空格转动旋钮，点击落下的扭蛋。星景中移动鼠标点亮白昼，滚轮穿行。"></canvas>
     <div class="veil" aria-hidden="true"></div>
     <header class="masthead">
       <a class="brand" href="#" id="brand-home" aria-label="回到光厅">
@@ -30,7 +30,8 @@
       <p class="eyebrow">A SMALL MACHINE. TWELVE INFINITE WORLDS.</p>
       <h1>把一场风，<br>握在手心。</h1>
       <p class="intro-copy">沿着水与光，走近那台扭蛋机。<br>十二种天气，藏在十二颗小小的梦里。</p>
-      <button id="begin" class="begin-button">开启琴廊 <span aria-hidden="true">↓</span></button>
+      <button id="begin" class="begin-button">开启琴廊 <span aria-hidden="true">↑</span></button>
+      <p class="scroll-guide">滚轮向前推，慢慢走近<small>向后拉退回 · 触屏向上滑动</small></p>
     </section>
     <section id="world-title" class="world-title" hidden aria-live="polite">
       <p class="eyebrow" id="world-sign"></p>
@@ -41,7 +42,7 @@
     <button id="capsule-hint" class="capsule-hint" hidden>打开这颗梦 <span aria-hidden="true">↗</span></button>
     <footer class="footnote">
       <div class="location"><span class="location-dot"></span><span id="place">光与水的回廊</span><small id="place-sub">THE HALL OF POSSIBILITIES</small><small id="music-track" hidden></small></div>
-      <div class="instruction" id="instruction"><span class="scroll-icon" aria-hidden="true"></span><span id="instruction-text">点击画面开启声音 · 滚轮走近</span></div>
+      <div class="instruction" id="instruction"><span class="scroll-icon" aria-hidden="true"></span><span id="instruction-text">滚轮向前推 · 琴柱可弹奏</span></div>
       <div class="journey" id="journey"><span id="distance-label">远景</span><div><i id="distance-fill"></i></div><span id="distance-end">近景</span></div>
     </footer>
     <div id="announcement" class="announcement" role="status" aria-live="polite"></div>
@@ -50,19 +51,19 @@
     <section id="error" class="error" hidden role="alert"><h1>光厅暂时没有亮起</h1><p id="error-message"></p><button onclick="location.reload()">重新进入</button></section>
     <dialog id="help" class="modal help-modal">
       <button class="close-modal" aria-label="关闭">×</button><p class="eyebrow">A LITTLE GUIDE</p><h2>慢一点，风景会回应你。</h2>
-      <p>声音默认开启；如果浏览器限制自动播放，首次点击画面或「开启琴廊」后开始播放。鼠标碰到回廊中的黑白琴柱，会弹出不同琴音并亮起暖光；22 根琴柱各有自己的音高，停留时不连续敲响，离开再碰可以再次弹奏。滚动鼠标滚轮，让镜头走近或远离；触屏上向上轻滑，也可以向前。</p><p>最近处，按住空格或屏幕上的提示，转动旋钮。转满半圈，一颗随机的星座扭蛋会落下。开启声音后，可以听到齿轮、蛋仓滚动、落蛋与开壳的声音。</p><p>碰一碰空中的气泡，看它散成细小的水珠，听见薄膜破裂的短响；拨动水面，听见波纹荡开的水声。琴音、气泡与水纹响起时，背景钢琴会轻柔让出空间，随后恢复。光点、草叶与粒子用清脆短音回应；点击泛光、滚轮穿行和按钮也有轻柔反馈，停住后移动声自然消退。</p><p>点击扭蛋，或按 Enter，打开它，进入属于你的天气。星景光圈外是夜晚，移动鼠标或手指，周围就会亮起一片白昼；停住时白昼仍在，移开后缓缓回到夜色。向前滚动，穿过花草、云光与粒子；向后滚动可以退回。移动鼠标拨动笔触，点击地景会泛起光纹。按 Esc 或「回到光厅」，再遇见另一场风。</p><p>右上角声音按钮统一控制所有声音。每个星景都有自己的钢琴曲与季节环境音：春鸟、夏蝉、秋叶、冬风，以及雨声与海潮。在「雷雨回湾」，碰到闪电枝杈附近的微光粒子，它们会闪烁并响起雷声；停留时不会连续打雷。白昼光圈会轻柔改变鸟鸣与夜虫的强弱。切换场景时声音自然交接，左下角显示当前曲目；主动静音后，点击画面不会自行开启，需再次点击声音按钮。</p>
+      <p>声音默认开启，浏览器允许时会自动播放；若受到自动播放限制，首次点击画面或按键后便会开始，无需再点声音开关。鼠标碰到回廊中的黑白琴柱，会奏出清亮的高音风铃，柱面对应的哥特风格音名字符平时微微发光，触碰时稍亮；22 根琴柱各有自己的音高，停留时不连续敲响，离开再碰可以再次弹奏。滚轮向前推（向上滚）走近，向后拉（向下滚）退回；触屏上向上轻滑，也可以向前。</p><p>最近处，按住空格或屏幕上的提示，转动旋钮。转满半圈，一颗随机的星座扭蛋会落下。开启声音后，可以听到齿轮、蛋仓滚动、落蛋与开壳的声音。</p><p>碰一碰空中的气泡，看它散成细小的水珠，听见薄膜破裂的短响；拨动水面，听见波纹荡开的水声。风铃琴柱、气泡、水纹、机械与粒子效果音响起时，背景钢琴会轻柔减弱并保持底声，随后自然恢复。光点、草叶与粒子用清脆短音回应；点击泛光、滚轮穿行和按钮也有轻柔反馈，停住后移动声自然消退。</p><p>点击扭蛋，或按 Enter，打开它，进入属于你的天气。星景光圈外是夜晚，移动鼠标或手指，周围就会亮起一片白昼；停住时白昼仍在，移开后缓缓回到夜色。滚轮向前推（向上滚），穿过花草、云光与粒子；向后拉（向下滚）可以退回。移动鼠标拨动笔触，点击地景会泛起光纹。按 Esc 或「回到光厅」，再遇见另一场风。</p><p>右上角声音按钮统一控制所有声音。每个星景都有自己的钢琴曲与季节环境音：春鸟、夏蝉、秋叶、冬风，以及雨声与海潮。在「雷雨回湾」，碰到闪电枝杈附近的微光粒子，它们会闪烁并响起雷声；停留时不会连续打雷。白昼光圈会轻柔改变鸟鸣与夜虫的强弱。切换场景时声音自然交接，左下角显示当前曲目；主动静音后，点击画面不会自行开启，需再次点击声音按钮。</p>
     </dialog>
     <dialog id="atlas" class="modal atlas-modal"><button class="close-modal" aria-label="关闭">×</button><p class="eyebrow">YOUR LITTLE CONSTELLATION</p><h2>收集过的天气</h2><p class="atlas-intro">每颗扭蛋都是一次偶遇。点亮的星景，可以再去一次。</p><div id="atlas-grid" class="atlas-grid"></div></dialog>
   </main>
-  <script src="vendor/three.min.js?v=clouds-v19-20261102"></script>
-  <script src="art-data.js?v=clouds-v19-20261102"></script>
-  <script src="bubbles.js?v=clouds-v19-20261102"></script>
-  <script src="optics.js?v=clouds-v19-20261102"></script>
-  <script src="hall.js?v=clouds-v19-20261102"></script>
-  <script src="worlds.js?v=clouds-v19-20261102"></script>
-  <script src="music-catalog.js?v=clouds-v19-20261102"></script>
-  <script src="music.js?v=clouds-sound-on-20261102"></script>
-  <script src="sounds.js?v=clouds-v19-20261102"></script>
-  <script src="app.js?v=clouds-sound-on-20261102"></script>
+  <script src="vendor/three.min.js?v=clouds-v23-20261102"></script>
+  <script src="art-data.js?v=clouds-v23-20261102"></script>
+  <script src="bubbles.js?v=clouds-v23-20261102"></script>
+  <script src="optics.js?v=clouds-v23-20261102"></script>
+  <script src="hall.js?v=clouds-v23-20261102"></script>
+  <script src="worlds.js?v=clouds-v23-20261102"></script>
+  <script src="music-catalog.js?v=clouds-v23-20261102"></script>
+  <script src="music.js?v=clouds-v23-20261102"></script>
+  <script src="sounds.js?v=clouds-v23-20261102"></script>
+  <script src="app.js?v=clouds-v23-20261102"></script>
 </body>
 </html>

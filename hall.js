@@ -64,8 +64,8 @@ window.CloudHall = (() => {
       for(let i=0;i<95;i++){const x=Math.sin(i*71.3)*w,y=(Math.sin(i*39.7)*.5+.5)*h,r=20+(i%9)*8;const g=c.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,i%2?'rgba(255,233,207,.23)':'rgba(233,158,185,.18)');g.addColorStop(1,'rgba(255,208,181,0)');c.fillStyle=g;c.fillRect(x-r,y-r,r*2,r*2);}
     });
   }
-  function stoneMaterial(base) {
-    const m=new T.MeshStandardMaterial({color:base,roughness:.26,metalness:.18,envMapIntensity:.62});
+  function hallMaterial(base,piano=false) {
+    const m=piano?new T.MeshPhysicalMaterial({color:base,roughness:.19,metalness:.12,clearcoat:1,clearcoatRoughness:.10,envMapIntensity:1.05,emissive:'#ffbd70',emissiveIntensity:0}):new T.MeshStandardMaterial({color:base,roughness:.26,metalness:.18,envMapIntensity:.62});
     m.onBeforeCompile=s=>{
       s.uniforms.uHallTime=uniforms.time;s.uniforms.uHallPointer=uniforms.pointer;s.uniforms.uHallGlow=uniforms.glow;s.uniforms.uHallSun={value:sunlight};
       s.vertexShader='varying vec3 vHallWorld,vHallNormal;\n'+s.vertexShader;
@@ -73,49 +73,62 @@ window.CloudHall = (() => {
       s.fragmentShader='varying vec3 vHallWorld,vHallNormal;uniform float uHallTime;uniform vec3 uHallPointer;uniform vec3 uHallSun;uniform float uHallGlow;\n'+s.fragmentShader;
       s.fragmentShader=s.fragmentShader.replace('#include <emissivemap_fragment>',`#include <emissivemap_fragment>
         vec3 p=vHallWorld; float t=uHallTime*.25;
-        float grain=sin(p.x*9.2+sin(p.y*6.4+p.z*.73))*sin(p.z*8.3+p.y*2.9);
+        ${piano?'':`float grain=sin(p.x*9.2+sin(p.y*6.4+p.z*.73))*sin(p.z*8.3+p.y*2.9);
         float marble=sin(p.x*2.1+p.y*1.6+sin(p.z*.7+p.y*2.3)*2.7+grain*.3);
-        diffuseColor.rgb*=.92+.06*grain+.035*smoothstep(.76,.97,abs(marble));
+        diffuseColor.rgb*=.92+.06*grain+.035*smoothstep(.76,.97,abs(marble));`}
         vec2 waterPoint=p.xz-uHallSun.xz*p.y/abs(uHallSun.y);
         vec2 flow=waterPoint*.94+vec2(sin(p.z*.64+t*.7),cos(p.x*.58-t*.6))*.42;
         float ca=sin(flow.x+sin(flow.y*1.13+t*.8)*.92+t*.35)*sin(flow.y+sin(flow.x*.91-t*.65)*.84-t*.23);
         vec3 fringe=pow(max(vec3(0.),1.-abs(vec3(ca)+vec3(.075,0.,-.075))),vec3(22.));
-        vec3 hue=.63+.37*cos(vec3(0.0,2.1,4.2)+p.y*.31+p.z*.19+t*.5);
+        vec3 hue=${piano?'mix(vec3(1.,.60,.30),vec3(.40,.78,.88),.5+.5*sin(p.y*.31+p.z*.19+t*.5))':'.63+.37*cos(vec3(0.0,2.1,4.2)+p.y*.31+p.z*.19+t*.5)'};
         float lightPatch=.28+.72*pow(.5+.5*sin(p.z*.29+p.y*.34),2.0);
         float causticPool=pow(max(0.,sin(flow.x*1.7+t*.7)*cos(flow.y*1.5-t*.6)),4.0);
         float mouse=exp(-length(p.xz-uHallPointer.xz)*.19)*uHallGlow;
-        totalEmissiveRadiance+=(fringe*hue*.68+hue*causticPool*.38)*lightPatch+vec3(.09,.20,.18)*mouse;
+        totalEmissiveRadiance+=(fringe*hue*.68+hue*causticPool*.38)*lightPatch*${piano?'.72*exp(-p.y*.055)':'1.'}+vec3(.09,.20,.18)*mouse;
         float rayDistance=(p.x-11.57)/uHallSun.x;vec3 atWindow=p-uHallSun*rayDistance;
         float paneZ=mod(atWindow.z-18.+5.,10.)-5.;float windowMask=(1.-smoothstep(2.38,2.70,abs(paneZ)))*smoothstep(7.35,7.75,atWindow.y)*(1.-smoothstep(13.35,13.75,atWindow.y));
         float bars=smoothstep(.025,.085,abs(mod(paneZ+2.5,.825)-.4125));
         float sunFacing=max(0.,dot(normalize(vHallNormal),-normalize(uHallSun)));
-        totalEmissiveRadiance+=vec3(.26,.105,.027)*windowMask*bars*sunFacing;
+        totalEmissiveRadiance+=vec3(${piano?'.65,.28,.075':'.26,.105,.027'})*windowMask*bars*sunFacing;
       `);
     };
-    m.customProgramCacheKey=()=> 'sunset-window-caustics-v4';return m;
+    m.customProgramCacheKey=()=>piano?'sunset-piano-caustics-v1':'sunset-window-caustics-v4';return m;
   }
   function archGeometry(r,band,depth) {
     const s=new T.Shape();s.absarc(0,0,r+band,0,PI,false);s.lineTo(-r,0);s.absarc(0,0,r,PI,0,true);s.closePath();
     return new T.ExtrudeGeometry(s,{depth,bevelEnabled:true,bevelSegments:2,bevelSize:.03,bevelThickness:.03,curveSegments:38});
   }
+  function noteRuneTexture(name) {
+    const letters={A:'𝔄',B:'𝔅',C:'ℭ',D:'𝔇',E:'𝔈',F:'𝔉',G:'𝔊'};
+    const texture=canvasTexture(256,512,c=>{
+      c.textAlign='center';c.textBaseline='middle';c.fillStyle='#fff6e4';c.shadowColor='#ffe6cb';c.shadowBlur=16;
+      c.font='208px "Cambria Math","Segoe UI Symbol",serif';c.fillText(letters[name[0]],116,225);
+      c.font='64px Georgia,serif';c.fillText(name.slice(1,-1),208,160);
+      c.font='58px Georgia,serif';c.fillText(name.slice(-1),128,392);
+    });
+    texture.userData.noteName=name;return texture;
+  }
   function buildArchitecture(scene,stone,gold) {
     const root=new T.Group(),windows=[],keys=[];root.name='clean-arcade';scene.add(root);
     const whiteKeyGeo=roundedGeometry(.91,7.9,.94,.07),blackKeyGeo=roundedGeometry(.73,7.9,.80,.06),footGeo=new T.CylinderGeometry(.72,.8,.3,20),ringGeo=new T.CylinderGeometry(.53,.53,.10,20);
     const capGeo=new T.BoxGeometry(1.3,.4,1.25),arcGeo=archGeometry(6.65,.42,.58);
-    const plinth=new T.BoxGeometry(1.4,.62,1.4);
+    const plinth=new T.BoxGeometry(1.4,.62,1.4),runeGeometry=new T.PlaneGeometry(.62,1.90);
     for(let i=0;i<11;i++){
       const z=23-i*10;
       for(const sign of [-1,1]){
         const x=sign*6.65,midi=48+i*2+(sign>0?1:0),black=[1,3,6,8,10].includes(midi%12);
-        const name=['C','C♯','D','E♭','E','F','F♯','G','A♭','A','B♭','B'][midi%12]+(Math.floor(midi/12)-1);
+        const name=['C','C♯','D','E♭','E','F','F♯','G','A♭','A','B♭','B'][midi%12]+(Math.floor((midi+24)/12)-1);
         const group=new T.Group();group.name='piano-column-'+midi;group.position.set(x,0,z);root.add(group);
-        const material=new T.MeshPhysicalMaterial({color:black?'#18242d':'#fff5df',roughness:black?.19:.24,metalness:.12,clearcoat:1,clearcoatRoughness:.10,emissive:'#ffbd70',emissiveIntensity:0});
+        const material=hallMaterial(black?'#18242d':'#fff5df',true);
         mesh(plinth,stone,group,0,.13);mesh(footGeo,stone,group,0,.57);mesh(black?blackKeyGeo:whiteKeyGeo,material,group,0,4.55);
         mesh(capGeo,stone,group,0,8.5);
         for(const y of [.87,1.05,8.20,8.70])mesh(ringGeo,gold,group,0,y);
         const label=canvasTexture(192,96,(c,w,h)=>{c.fillStyle=black?'#f6dbab':'#8b704d';c.textAlign='center';c.textBaseline='middle';c.font='40px Georgia,serif';c.fillText(name,w/2,h/2);});
         mesh(new T.PlaneGeometry(.56,.28),new T.MeshBasicMaterial({map:label,transparent:true}),group,0,1.40,black?.415:.485);
-        const key={midi,name,black,group,material,glow:0};group.userData.pianoKey=key;keys.push(key);
+        const runeMaterial=new T.MeshBasicMaterial({map:noteRuneTexture(name),color:new T.Color().setRGB(black?1.7:.76,black?1.2:.54,black?.75:1.05),transparent:true,opacity:black?.16:.22,depthWrite:false,toneMapped:false});
+        const frontRune=mesh(runeGeometry,runeMaterial,group,0,4.6,black?.432:.502);frontRune.name='glowing-note-rune-front';
+        const sideRune=mesh(runeGeometry,runeMaterial,group,-sign*((black?.73:.91)/2+.032),4.6,0);sideRune.rotation.y=-sign*PI/2;sideRune.name='glowing-note-rune-side';
+        const key={midi,name,black,group,material,runeMaterial,glow:0};group.userData.pianoKey=key;keys.push(key);
       }
       mesh(arcGeo,stone,root,0,8.7,z-.29);
       // Thin intact architectural gold beading follows the same vault.
@@ -365,7 +378,7 @@ window.CloudHall = (() => {
     const warm=new T.PointLight('#ffc089',26,25,2);warm.position.set(10.9,10,-2);scene.add(warm);
     const softbox=new T.DirectionalLight('#f1dbd0',.62);softbox.position.set(-2,6,10);scene.add(softbox);
     const pointerLight=new T.PointLight('#bbffe7',0,7,2);scene.add(pointerLight);
-    const stone=stoneMaterial('#248496'),gold=new T.MeshStandardMaterial({color:'#d8af72',metalness:.85,roughness:.22,envMap:env,envMapIntensity:1.3});
+    const stone=hallMaterial('#248496'),gold=new T.MeshStandardMaterial({color:'#d8af72',metalness:.85,roughness:.22,envMap:env,envMapIntensity:1.3});
     const {root:architecture,windows,keys}=buildArchitecture(scene,stone,gold);
     const machine=buildMachine(scene,env);
     const bubbles=CloudBubbles.create(scene,[machine.root,architecture],onBubblePop),optics=CloudOptics.create();
@@ -395,7 +408,7 @@ window.CloudHall = (() => {
         lastCamera=camera;
         uniforms.time.value=time;uniforms.glow.value=T.MathUtils.damp(uniforms.glow.value,hover?1:0,2.0,dt);
         bubbles.update(time,dt,camera);
-        for(const key of keys){key.glow=T.MathUtils.damp(key.glow,hoveredKey===key?.40:0,5,dt);key.material.emissiveIntensity=key.glow*.65;}
+        for(const key of keys){key.glow=T.MathUtils.damp(key.glow,hoveredKey===key?.40:0,5,dt);key.material.emissiveIntensity=key.glow*.65;key.runeMaterial.opacity=(key.black?.16:.22)+Math.sin(time*.85+key.midi*.61)*.035+key.glow*.48;}
         pointerLight.position.copy(uniforms.pointer.value);pointerLight.position.y=1.0;pointerLight.intensity=uniforms.glow.value*4;
         machine.crank.rotation.z=machine.startRotation-T.MathUtils.degToRad(angle);
         updateHopper(machine,angle,dt);
@@ -413,7 +426,7 @@ window.CloudHall = (() => {
       resize(w,h){reflection.setSize(Math.min(900,w),Math.min(600,Math.round(900*h/w)));const ratio=renderer.getPixelRatio();optics.resize(Math.round(w*ratio),Math.round(h*ratio));},
       makeCapsule(shade,glyph){return makeCapsule(shade,env,.26,glyph);},
       project(local,camera){return local.clone().project(camera);},
-      stats(){return {architecture:architecture.children.length,keys:keys.map(k=>{const p=k.group.position.clone().add(v3(0,4.5,0)),q=lastCamera?p.clone().project(lastCamera):null;return {midi:k.midi,name:k.name,black:k.black,glow:k.glow,position:p.toArray(),screen:q?[(q.x*.5+.5)*innerWidth,(-q.y*.5+.5)*innerHeight]:null};}),hoveredKey:hoveredKey?.midi??null,machineRotation:machine.root.rotation.y,crankRotation:machine.crank.rotation.z,hopper:{rotation:machine.hopper.rotation.y,target:machine.hopperMotion.target,speed:machine.hopperMotion.speed,balls:machine.balls.map(b=>({position:b.position.toArray(),rotation:b.rotation.toArray().slice(0,3)}))},rippleCount:water.ripples.filter(r=>r.z>-100).length,bubbles:bubbles.stats(),lighting:{sunDirection:sunlight.clone().normalize().toArray(),beams:windowBeams.map(({beam,...data})=>data),dust:{count:motes.geometry.attributes.position.count,litCount:motes.userData.litCount,palette:motes.userData.palette,time:uniforms.time.value}}};}
+      stats(){return {architecture:architecture.children.length,keys:keys.map(k=>{const p=k.group.position.clone().add(v3(0,4.5,0)),q=lastCamera?p.clone().project(lastCamera):null;return {midi:k.midi,pitchMidi:k.midi+24,name:k.name,black:k.black,glow:k.glow,runeOpacity:k.runeMaterial.opacity,position:p.toArray(),screen:q?[(q.x*.5+.5)*innerWidth,(-q.y*.5+.5)*innerHeight]:null};}),hoveredKey:hoveredKey?.midi??null,machineRotation:machine.root.rotation.y,crankRotation:machine.crank.rotation.z,hopper:{rotation:machine.hopper.rotation.y,target:machine.hopperMotion.target,speed:machine.hopperMotion.speed,balls:machine.balls.map(b=>({position:b.position.toArray(),rotation:b.rotation.toArray().slice(0,3)}))},rippleCount:water.ripples.filter(r=>r.z>-100).length,bubbles:bubbles.stats(),lighting:{sunDirection:sunlight.clone().normalize().toArray(),beams:windowBeams.map(({beam,...data})=>data),dust:{count:motes.geometry.attributes.position.count,litCount:motes.userData.litCount,palette:motes.userData.palette,time:uniforms.time.value}}};}
     };
   }
   return {create,canvasTexture,makeCapsule};
