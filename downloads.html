@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#123c40">
+  <title>把天气留在桌面 · 云彩没有尾巴</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root{color-scheme:dark;font-family:"Microsoft YaHei","PingFang SC",sans-serif;color:#f7edda;background:#102e35;--muted:#c0cfca;--gold:#edcf98}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 0 0,#53625766,transparent 50%),radial-gradient(ellipse at 95% 25%,#79614835,transparent 60%);min-height:100vh}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:5px}[hidden]{display:none!important}.wrap{max-width:1280px;margin:auto;padding:38px 6vw 65px}header{display:flex;align-items:center;justify-content:space-between;gap:20px;font-size:12px;letter-spacing:2px}.brand{font-family:SimSun,"Songti SC",serif;line-height:1.6;font-size:19px;letter-spacing:4px}.brand small{display:block;font:8px Georgia,serif;letter-spacing:3px;opacity:.55}.back{color:var(--muted);font-size:11px}.hero{padding:66px 0 32px;max-width:780px}.eyebrow{font:10px Georgia,serif;letter-spacing:3px;color:var(--gold)}h1{font-family:SimSun,"Songti SC",serif;font-size:clamp(32px,4.2vw,54px);font-weight:400;letter-spacing:7px;line-height:1.55;margin:19px 0}.lead{font-size:13px;line-height:2.2;letter-spacing:1.5px;color:var(--muted);max-width:670px}.platforms{display:flex;gap:6px;flex-wrap:wrap;margin:25px 0 17px}.platforms button{background:#ffffff08;border:1px solid #ffffff24;border-radius:30px;color:var(--muted);padding:11px 23px;font-size:12px}.platforms [aria-pressed=true]{color:#203c40;background:var(--gold);border-color:var(--gold)}.setup{padding:19px 23px;border-left:2px solid #edcf9870;background:#f2e0b509;max-width:100%;min-height:105px}.setup p{margin:0 0 7px;color:#dee0ce;font-size:12px;line-height:1.9;letter-spacing:.5px}.setup p:last-child{margin-bottom:0;color:var(--muted);font-size:11px}.setup a{text-decoration:underline;text-underline-offset:3px;color:var(--gold)}.collection{display:flex;justify-content:space-between;align-items:center;margin:38px 0 19px;gap:18px}.collection h2{font-size:14px;font-weight:400;letter-spacing:4px;margin:0}.collection span{font:10px Georgia,serif;color:var(--muted);letter-spacing:2px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.card{background:#07232c77;border:1px solid #d5e8d21f;overflow:hidden;border-radius:5px;transition:transform .25s,border-color .25s}.card:hover{transform:translateY(-3px);border-color:#ebd1a75c}.image{display:block;aspect-ratio:16/9;position:relative;overflow:hidden;background:#1b4148}.image img{width:100%;height:100%;object-fit:cover;transition:transform .7s;opacity:.88}.card:hover img{transform:scale(1.035);opacity:1}.image:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,#08252e75)}.number{position:absolute;left:17px;top:15px;z-index:1;font:11px Georgia,serif;letter-spacing:2px;text-shadow:0 1px 9px #000}.card-body{padding:21px 20px}.sign{font-size:10px;letter-spacing:3px;color:var(--muted)}.card h3{font-family:SimSun,"Songti SC",serif;letter-spacing:4px;font-size:23px;font-weight:400;margin:11px 0 21px}.card-actions{display:flex;align-items:center;justify-content:space-between;gap:10px}.download{color:var(--gold);border-bottom:1px solid #edcf984d;padding:8px 0;font-size:12px;letter-spacing:1px}.download:hover{color:#fff3d8}.size{font:10px Georgia,serif;opacity:.65}.preview{font-size:10px;color:var(--muted);letter-spacing:1px}.universal{font-size:9px;color:#9bb6b7;letter-spacing:1px;margin:14px 0 0}.card:target{border-color:var(--gold);box-shadow:0 0 32px #edcf9818}details{margin:35px 0 20px;padding:20px 0;border-top:1px solid #ffffff20;border-bottom:1px solid #ffffff20}summary{cursor:pointer;font-size:12px;letter-spacing:2px;color:#e7d9bb}details p{font-size:11px;line-height:2.1;color:var(--muted);max-width:850px}footer{font-size:10px;letter-spacing:1px;color:#b1c4bf;line-height:2}footer a{color:var(--gold)}@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.wrap{padding:25px 5vw 45px}.hero{padding-top:48px}}@media(max-width:560px){.grid{grid-template-columns:1fr;gap:19px}.hero{padding-top:35px}h1{font-size:33px;letter-spacing:4px}.lead{font-size:12px}.setup{padding:16px}.collection span{font-size:8px;letter-spacing:1px}.brand{font-size:16px}.brand small{font-size:6px}.back{font-size:9px}.card h3{font-size:24px}}
+    .unlock-guide{font-size:12px;line-height:2;letter-spacing:1px;color:var(--muted);margin:-5px 0 24px}.locked .image img{filter:grayscale(.8) blur(2px);opacity:.24}.locked .download{color:#9bb0b0;border-bottom-color:#ffffff18;cursor:default;font-size:11px}.locked h3{opacity:.65}.locked .number{opacity:.5}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header><a class="brand" href="index.html">云彩没有尾巴<small>CLOUDS WITHOUT TAILS</small></a><a class="back" href="index.html">← 回到互动星座馆</a></header>
+    <main>
+      <section class="hero"><p class="eyebrow">A LITTLE WEATHER, ON YOUR DESKTOP.</p><h1>把遇见的天气，<br>留在你的桌面。</h1><p class="lead">只有亲手扭出来的星景，才能带走。<br>每转出一颗梦，就解锁一份属于它的动态桌面。</p></section>
+      <div class="platforms" role="group" aria-label="选择操作系统"><button data-platform="windows" aria-pressed="true">Windows</button><button data-platform="macos" aria-pressed="false">macOS</button></div>
+      <section class="setup" id="windows-guide" aria-label="Windows 使用方法"><p>先安装并运行 <a href="https://store.steampowered.com/app/431960/" target="_blank" rel="noopener">Wallpaper Engine</a>（Steam 付费软件）。下载并完整解压，双击 <strong>Start-Windows.cmd</strong>，即可应用该场景。</p><p>兼容中文目录，会按需将资源复制到公共文档的 CloudsWithoutTails 文件夹。输入和声音还受壁纸软件设置影响；首次可能需点击解锁音频。</p></section>
+      <section class="setup" id="macos-guide" hidden aria-label="macOS 使用方法"><p>先安装 <a href="https://sindresorhus.com/plash" target="_blank" rel="noopener">Plash</a>（免费，旧系统可在官网选对应版本）。下载并完整解压，双击 <strong>Start-macOS.command</strong>，导入本场景。</p><p>互动需在 Plash 中开启 Browsing Mode，Plash 壁纸会静音。启动器优先使用系统 Ruby，缺少时需已有 Python 3；首次可能需要右键打开。macOS 启动尚未做真机验证，详见包内说明。</p></section>
+      <div class="collection"><h2>已经遇见的天气</h2><span id="unlock-count" role="status" aria-live="polite">已解锁 00 / 12</span></div>
+      <p id="unlock-guide" class="unlock-guide"></p>
+      <div id="wallpaper-grid" class="grid"></div>
+      <details><summary>第一次使用与常见问题</summary><p>先回到光厅，走近扭蛋机，按住空格让旋钮转满 180°。扭蛋掉出时，对应的星座壁纸自动解锁，之后可以重复下载。记录保存在当前浏览器，刷新和重新打开仍保留；清除浏览器数据或更换浏览器不会自动同步。主页光厅不属于扭蛋奖励。</p><p>一个 ZIP 同时包含 Windows 和 macOS 启动文件，选择自己的系统使用即可。每包只含一个场景，所有运行资源随包保存；导入后请保留解压目录。壁纸模式隐藏网页按钮，直接进入场景；静置时柔光缓缓巡游，移动鼠标会恢复跟随。</p><p>Windows 启动器查找运行中的 Wallpaper Engine 和 Steam 游戏库，找不到时可手动选择已安装的启动程序。macOS 通过本机地址给 Plash 载入场景；如 Plash 只导入未切换，从它的菜单选中新场景。重启后重新双击启动文件；停止服务可用包内 Stop-macOS.command。本包不会自动安装软件、禁用系统保护或添加开机任务。</p><p>原网页的滚轮推进、光圈、气泡、水纹和粒子互动均保留；桌面宿主可能拦截滚轮或鼠标事件，可用“浏览器预览”体验完整交互。Plash 对壁纸静音，声音可在浏览器预览中开启。Windows 启动方式已实测，macOS 仍需要在真实 Mac 上复核。</p></details>
+    </main>
+    <footer>独立离线资源 · 公版乐谱 / CC0 钢琴音轨 · 实时三维场景<br>灯光还在游动，风景一直等你。 <a href="index.html">回到云彩没有尾巴 ↗</a></footer>
+  </div>
+  <template id="wallpaper-card"><article class="card"><a class="image" target="_blank" rel="noopener" aria-label="浏览器预览"><img loading="lazy" alt=""><span class="number"></span></a><div class="card-body"><div class="sign"></div><h3></h3><div class="card-actions"><a class="download" download>下载场景包 ↓ <span class="size"></span></a><a class="preview" target="_blank" rel="noopener">浏览器预览 ↗</a></div><p class="universal">WINDOWS + macOS · 独立离线包</p></div></article></template>
+  <script src="wallpapers.js?v=clouds-v26-20261102"></script>
+  <script>
+    const grid=document.getElementById('wallpaper-grid');
+    function collected(){
+      try{const data=JSON.parse(localStorage.getItem('cloud-capsules-v1')||'[]');return Array.isArray(data)?[...new Set(data.filter(i=>Number.isInteger(i)&&i>=0&&i<12))]:[];}catch{return [];}
+    }
+    function renderCards(){
+      const found=collected();grid.replaceChildren();
+      document.getElementById('unlock-count').textContent='已解锁 '+String(found.length).padStart(2,'0')+' / 12';
+      document.getElementById('unlock-guide').textContent=found.length?'已抽到的星景可以重复下载。继续扭蛋，遇见下一场天气。':'还没有扭出星景。回到光厅，按住空格转动旋钮，解锁你的第一份动态桌面。';
+      for(const scene of CLOUD_WALLPAPERS.filter(scene=>scene.index>=0)){
+        const unlocked=found.includes(scene.index),card=document.getElementById('wallpaper-card').content.cloneNode(true),article=card.querySelector('article');
+        article.id=scene.scene;article.classList.toggle('locked',!unlocked);
+        card.querySelector('img').src=scene.image;card.querySelector('img').alt=scene.name+' · '+scene.title;
+        card.querySelector('.number').textContent=String(scene.index+1).padStart(2,'0')+' / '+scene.glyph;
+        card.querySelector('.sign').textContent=scene.name+(unlocked?' · 已抽到':' · 尚未抽到');card.querySelector('h3').textContent=scene.title;
+        const download=card.querySelector('.download');
+        if(unlocked){
+          for(const link of card.querySelectorAll('.image,.preview'))link.href='index.html?wallpaper=1&scene='+encodeURIComponent(scene.scene);
+          download.href=scene.archive;card.querySelector('.size').textContent=' · '+(scene.size/1048576).toFixed(1)+' MB';
+          for(const link of card.querySelectorAll('a'))link.addEventListener('click',event=>{if(!collected().includes(scene.index)){event.preventDefault();renderCards();}});
+        }else{
+          download.removeAttribute('download');download.setAttribute('aria-disabled','true');download.textContent='尚未抽到 · 等待解锁';
+          card.querySelector('.image').setAttribute('aria-label',scene.name+'，尚未抽到');
+          const preview=card.querySelector('.preview');preview.href='index.html';preview.removeAttribute('target');preview.textContent='去扭蛋 →';
+        }
+        grid.append(card);
+      }
+    }
+    renderCards();
+    window.addEventListener('storage',event=>{if(event.key==='cloud-capsules-v1'||event.key===null)renderCards();});
+    window.addEventListener('pageshow',renderCards);window.addEventListener('focus',renderCards);
+    function choosePlatform(platform){
+      document.querySelectorAll('[data-platform]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.platform===platform)));
+      document.getElementById('windows-guide').hidden=platform!=='windows';document.getElementById('macos-guide').hidden=platform!=='macos';
+    }
+    document.querySelectorAll('[data-platform]').forEach(button=>button.addEventListener('click',()=>choosePlatform(button.dataset.platform)));
+    if(/Mac|iPhone|iPad/.test(navigator.platform))choosePlatform('macos');
+  </script>
+</body>
+</html>

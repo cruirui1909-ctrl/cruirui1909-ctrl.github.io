@@ -1,25 +1,33 @@
 /* No server, CDN, framework, or build step is needed to open this experience. */
-(() => {
+(async() => {
   'use strict';
   const $=id=>document.getElementById(id),T=window.THREE;
   const ui={canvas:$('scene'),intro:$('intro'),knob:$('knob-hint'),capsule:$('capsule-hint'),angle:$('angle'),turn:$('turn-meter-fill'),instruction:$('instruction-text'),worldTitle:$('world-title'),back:$('back'),distance:$('distance-fill'),journey:$('journey')};
   const params=new URLSearchParams(location.search),testMode=params.has('test');
+  const wallpaperMode=!!window.CLOUD_WALLPAPER||params.has('wallpaper');
   const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const state={phase:'approach',progress:0,progressTarget:0,angle:0,holding:false,chosen:-1,worldIndex:-1,worldZoom:0,worldZoomTarget:0,elapsed:0,dropStart:0,travelStart:0,returnStart:0,pointerActive:false,lastPointer:0,lastRipple:-1,draws:0,frames:0,averageFrameMs:0};
   const pointer={ndc:new T.Vector2(0,0),smooth:new T.Vector2(0,0),x:0,y:0,inside:false};
   let renderer,hall,camera,daylight,world=null,ball=null,ballLight=null,portal=null,ready=false,previous=performance.now(),lastTouch=null,noticeTimer=0;
   const defs=window.ZodiacWorlds?.definitions;
+  const wallpaperScene=window.CLOUD_WALLPAPER?.scene||params.get('scene')||'hall';
+  const wallpaperIndex=defs?.findIndex(d=>d.en.toLowerCase()===wallpaperScene)??-1;
+  const idleLight=new T.Vector2();
+  if(wallpaperMode)document.documentElement.classList.add('wallpaper-mode');
   let visited=[];
   try{const stored=JSON.parse(localStorage.getItem('cloud-capsules-v1')||'[]');if(Array.isArray(stored))visited=[...new Set(stored.filter(n=>Number.isInteger(n)&&n>=0&&n<12))];}catch{}
+  if(wallpaperMode&&!window.CLOUD_WALLPAPER&&!visited.includes(wallpaperIndex)){
+    location.replace('downloads.html'+(wallpaperIndex>=0?'#'+defs[wallpaperIndex].en.toLowerCase():''));return;
+  }
   let audio=null,audioOn=false,music=null,effects=null;
   function announce(message){$('announcement').textContent=message;$('announcement').classList.add('visible');clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>$('announcement').classList.remove('visible'),2400);}
-  function fail(error){$('loading').hidden=true;$('error').hidden=false;$('error-message').textContent='请用新版 Chrome 或 Edge 打开，并在浏览器设置中启用图形加速。'+(error?.message?'（'+error.message+'）':'');console.error(error);}
+  function fail(error){ready=false;if(window.CloudLoading)CloudLoading.fail(error);else{$('loading').hidden=true;$('error').hidden=false;$('error-message').textContent='请用新版 Chrome 或 Edge 打开，并在浏览器设置中启用图形加速。'+(error?.message?'（'+error.message+'）':'');}console.error(error);}
   function randomIndex(){
     const bytes=new Uint32Array(1),limit=Math.floor(0x100000000/12)*12;
     do{crypto.getRandomValues(bytes);}while(bytes[0]>=limit);
     return bytes[0]%12;
   }
-  function saveCollection(){if(testMode)return;try{localStorage.setItem('cloud-capsules-v1',JSON.stringify(visited));}catch{}}
+  function saveCollection(){if(testMode||wallpaperMode)return;try{localStorage.setItem('cloud-capsules-v1',JSON.stringify(visited));}catch{}}
   function renderAtlas(){
     $('collection-count').textContent=String(visited.length).padStart(2,'0')+' / 12';
     const grid=$('atlas-grid');grid.replaceChildren();
@@ -68,14 +76,15 @@
     state.holding=false;state.angle=180;state.chosen=randomIndex();state.draws++;state.phase='dropping';state.dropStart=state.elapsed;
     const def=defs[state.chosen];ball=hall.makeCapsule(def.color,def.glyph);ball.position.set(0,.59,.98);hall.scene.add(ball);
     ballLight=new T.PointLight(def.color,1.5,3,2);ballLight.position.copy(ball.position);hall.scene.add(ballLight);ui.knob.hidden=true;
+    if(!wallpaperMode&&!visited.includes(state.chosen)){visited.push(state.chosen);saveCollection();renderAtlas();announce(def.name+'已收集 · 桌面壁纸已解锁');}
     ui.instruction.textContent='一颗梦，正在落下';effects?.event('release');
   }
-  function beginTurn(){if(state.phase==='ready'||state.phase==='turning'){state.holding=true;state.phase='turning';ui.canvas.focus({preventScroll:true});}}
+  function beginTurn(){if(!wallpaperMode&&(state.phase==='ready'||state.phase==='turning')){state.holding=true;state.phase='turning';ui.canvas.focus({preventScroll:true});}}
   function endTurn(){state.holding=false;}
   function createWorld(index){
     if(world)world.dispose();daylight.reset(index,pointer.ndc);world=ZodiacWorlds.create(index,{reducedMotion,daylight:daylight.mask});state.worldIndex=index;
-    if(!visited.includes(index)){visited.push(index);saveCollection();renderAtlas();}
     const d=defs[index];$('world-sign').textContent=d.glyph+'  '+d.name+'  /  '+d.en;$('world-name').textContent=d.title;$('world-description').textContent=d.line;
+    if($('wallpaper-download'))$('wallpaper-download').href='downloads.html#'+d.en.toLowerCase();
     $('place').textContent=d.weather;$('place-sub').textContent='TWELVE WEATHERS · '+String(index+1).padStart(2,'0');
     state.worldZoom=0;state.worldZoomTarget=0;ui.instruction.textContent='移动点亮白昼 · 滚轮向前推入景';ui.journey.hidden=false;$('distance-label').textContent='入景';$('distance-end').textContent='深处';
     music.setScene(index);effects?.setScene(index);
@@ -93,6 +102,7 @@
     effects?.event('open');ui.instruction.textContent='把这场风，轻轻打开';
   }
   function returnToHall(){
+    if(wallpaperMode)return;
     if(!ready||state.phase==='returning')return;
     if(state.phase==='world'||state.phase==='travel'){
       effects?.leave();
@@ -106,6 +116,7 @@
     state.progressTarget=near?1:0;state.progress=near?1:0;state.phase=near?'ready':'approach';
     ui.worldTitle.hidden=true;ui.back.hidden=true;ui.journey.hidden=false;$('distance-label').textContent='远景';$('distance-end').textContent='近景';$('place').textContent='光与水的回廊';$('place-sub').textContent='THE HALL OF POSSIBILITIES';
     ui.instruction.textContent=near?'按住空格，旋转半圈': '滚轮向前推，慢慢走近';ui.intro.classList.toggle('departed',near);ui.canvas.focus({preventScroll:true});
+    if($('wallpaper-download'))$('wallpaper-download').href='downloads.html';
     music.setScene(null);effects?.setScene(null);
   }
   function projectHint(element,position,offsetX,offsetY){
@@ -146,7 +157,9 @@
     world.setCamera(camera,state.worldZoom,pointer.smooth,dt);
     ui.journey.hidden=false;ui.distance.style.width=state.worldZoom*100+'%';
     world.update(state.elapsed,dt,state.pointerActive,1,innerHeight*renderer.getPixelRatio());
-    daylight.render(renderer,world.scene,camera,pointer.ndc,pointer.inside,state.elapsed,dt);
+    const idle=wallpaperMode&&(!pointer.inside||performance.now()-state.lastPointer>12000);
+    if(idle)idleLight.set(Math.sin(state.elapsed*.09)*.50,Math.cos(state.elapsed*.07)*.26);
+    daylight.render(renderer,world.scene,camera,idle?idleLight:pointer.ndc,wallpaperMode||pointer.inside,state.elapsed,dt);
     effects?.update({daylight:daylight.mask.uDayStrength.value,flash:world.uniforms.uFlash.value,cameraSpeed:document.hidden?0:Math.abs(state.worldZoom-previousZoom)/Math.max(.001,dt)*2});
   }
   function tick(now){
@@ -177,6 +190,7 @@
       }
       if(f>=1){state.phase='world';$('passage').style.opacity='0';ui.worldTitle.hidden=false;ui.back.hidden=false;ui.instruction.textContent='移动点亮白昼 · 滚轮向前推入景';ui.canvas.focus({preventScroll:true});}
     }else{updateHall(dt);hall.render(renderer,camera);}
+    if(state.frames===2)CloudLoading.finish();
     requestAnimationFrame(tick);
   }
   function leavePointer(){pointer.inside=false;hall?.leave();world?.leave();effects?.leave();}
@@ -197,6 +211,7 @@
     }
   }
   function onKey(event){
+    if(!ready)return;
     if($('help').open||$('atlas').open)return;
     if(event.code==='Space'&&event.target!==ui.knob&&event.target.closest?.('button,a,input,textarea'))return;
     if(event.code==='Space'){event.preventDefault();if(event.repeat)return;beginTurn();}
@@ -209,7 +224,7 @@
   }
   function installEvents(){
     document.addEventListener('pointerdown',resumeSound,true);document.addEventListener('keydown',resumeSound,true);
-    window.addEventListener('wheel',e=>{if($('help').open||$('atlas').open)return;e.preventDefault();const d=-e.deltaY*(e.deltaMode===1?25:e.deltaMode===2?innerHeight:1);if(state.phase==='world')state.worldZoomTarget=T.MathUtils.clamp(state.worldZoomTarget+d*.00048,0,1);else setProgress(state.progressTarget+d*.00078);},{passive:false});
+    window.addEventListener('wheel',e=>{if(!ready||$('help').open||$('atlas').open)return;e.preventDefault();const d=-e.deltaY*(e.deltaMode===1?25:e.deltaMode===2?innerHeight:1);if(state.phase==='world')state.worldZoomTarget=T.MathUtils.clamp(state.worldZoomTarget+d*.00048,0,1);else setProgress(state.progressTarget+d*.00078);},{passive:false});
     window.addEventListener('keydown',onKey);window.addEventListener('keyup',e=>{if(e.code==='Space')endTurn();});window.addEventListener('blur',()=>{endTurn();leavePointer();});
     document.addEventListener('visibilitychange',()=>{if(document.hidden){endTurn();leavePointer();}previous=performance.now();});
     ui.canvas.addEventListener('pointermove',movePointer);
@@ -237,15 +252,22 @@
   }
   try{
     if(!T||!window.ART_DATA||!window.CloudHall||!window.ZodiacWorlds||!window.CloudMusic||!window.CloudSound||!window.PIANO_TRACKS)throw new Error('网页资源缺失，请保留整个文件夹');
+    CloudLoading.set(74,'为光与水留一片空间');await CloudLoading.paint();
     renderer=new T.WebGLRenderer({canvas:ui.canvas,antialias:true,alpha:false,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.4));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=T.SRGBColorSpace;renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1.02;
+    CloudLoading.set(78,'让夕阳照进琴廊');await CloudLoading.paint();
     camera=new T.PerspectiveCamera(48,innerWidth/innerHeight,.08,240);hall=CloudHall.create(renderer,hit=>effects?.event('bubble',undefined,hit),key=>music?.playCue('piano-'+key.midi));hall.resize(innerWidth,innerHeight);daylight=CloudOptics.createDaylight({reducedMotion});daylight.resize(Math.round(innerWidth*renderer.getPixelRatio()),Math.round(innerHeight*renderer.getPixelRatio()));
     music=CloudMusic.create(updateMusicUI,message=>announce(message||'音乐暂未播放，请点击右上角重新开启'));
-    installEvents();renderAtlas();ready=true;ui.canvas.focus({preventScroll:true});requestAnimationFrame(tick);
-    setTimeout(()=>$('loading').classList.add('done'),450);setTimeout(()=>$('loading').hidden=true,1500);
+    installEvents();if(!wallpaperMode)renderAtlas();
+    if(wallpaperMode&&wallpaperIndex>=0){createWorld(wallpaperIndex);state.phase='world';}
+    CloudLoading.set(88,'把水纹与微光轻轻铺开');await CloudLoading.paint();
+    await renderer.compileAsync(world?world.scene:hall.scene,camera);
+    CloudLoading.set(96,'等第一缕光落下来');await CloudLoading.paint();
+    previous=performance.now();ready=true;ui.canvas.focus({preventScroll:true});requestAnimationFrame(tick);
     window.cloudExperience={
       getState(){const screen=ball?.position.clone().project(camera);return {phase:state.phase,progress:state.progress,target:state.progressTarget,angle:state.angle,chosen:state.chosen,world:state.worldIndex,worldTravel:state.worldZoom,worldTravelTarget:state.worldZoomTarget,draws:state.draws,frames:state.frames,averageFrameMs:state.averageFrameMs,visited:visited.slice(),hall:hall.stats(),worldStats:world?.stats()||null,daylight:world?daylight.stats():null,capsulePosition:ball?.position.toArray()||null,capsuleScreen:screen?[(screen.x*.5+.5)*innerWidth,(-screen.y*.5+.5)*innerHeight]:null,renderer:{calls:renderer.info.render.calls,triangles:renderer.info.render.triangles}};},
       getMusic(){return music.stats();},
       getSound(){return effects?.stats()||{enabled:false,scene:state.worldIndex+1,context:'not-started',rms:0,peak:0,events:{}};},
+      wallpaper:wallpaperMode?{scene:wallpaperIndex<0?'hall':wallpaperScene,index:wallpaperIndex}:null,
       definitions:defs.map(d=>({name:d.name,title:d.title,effects:d.effects.slice()}))
     };
     if(testMode)window.cloudExperience.test={enterWorld(index){createWorld(index);state.phase='world';ui.intro.classList.add('departed');ui.worldTitle.hidden=false;ui.back.hidden=false;ui.knob.hidden=true;ui.capsule.hidden=true;ui.journey.hidden=false;},returnHall(){resetHall(true);},randomIndex};

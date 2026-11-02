@@ -11,7 +11,7 @@ window.CloudMusic = (() => {
     const base=[0,0],cueBanks=new Map(),cueEvents={},cueHistory=[];
     let duck=1,duckUntil=0,duckLevel=1,mixAnimation=0,cueError=null,lastMix=0;
     for(const [name,file,count] of [['bubble','bubble.wav',3],['water','water.wav',3],['thunder','thunder.wav',2],...Array.from({length:22},(_,i)=>['piano-'+(48+i),'piano/'+(48+i)+'.mp3',1])]){
-      cueBanks.set(name,Array.from({length:count},()=>{const p=new Audio('assets/sounds/'+file+'?v=clouds-v23-20261102');p.preload='auto';return p;}));
+      cueBanks.set(name,Array.from({length:count},()=>{const p=new Audio('assets/sounds/'+file+'?v=clouds-v26-20261102');p.preload='auto';return p;}));
     }
     function applyVolume(){players.forEach((p,i)=>{p.volume=Math.max(0,Math.min(1,base[i]*duck));});}
     function updateRain(){
