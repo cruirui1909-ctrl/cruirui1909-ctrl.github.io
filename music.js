@@ -4,7 +4,7 @@ window.CloudMusic = (() => {
   function create(onChange,onError){
     const tracks=window.PIANO_TRACKS,players=[new Audio(),new Audio()];
     players.forEach(p=>{p.loop=true;p.preload='auto';p.volume=0;});
-    let enabled=false,scene=0,active=-1,generation=0,animation=0,error=null;
+    let enabled=false,scene=0,active=-1,generation=0,animation=0,error=null,waitingForGesture=false;
     const level=1;
     const rain=new Audio('assets/sounds/rain.mp3'),rainLevels={2:.50,8:.62,9:.18,11:.20};rain.loop=true;rain.preload='auto';rain.volume=0;
     let rainAnimation=0,rainError=null;
@@ -52,13 +52,14 @@ window.CloudMusic = (() => {
       const ticket=++generation,next=active<0?0:1-active,player=players[next];
       cancelAnimationFrame(animation);player.pause();base[next]=0;applyVolume();
       player.src=tracks[scene].file;player.dataset.scene=String(scene);player.dataset.generation=String(ticket);
-      active=next;error=null;
+      active=next;error=null;waitingForGesture=false;
       try{
         await player.play();
         if(ticket!==generation||!enabled)return;
         fade(players.map((_,i)=>i===next?level:0),1.8,()=>{players[1-next].pause();});
       }catch(e){
         if(ticket!==generation)return;
+        if(e.name==='NotAllowedError'){waitingForGesture=true;notify();return;}
         error=e.name+': '+e.message;enabled=false;players.forEach((p,i)=>{p.pause();base[i]=0;});for(const bank of cueBanks.values())for(const p of bank)p.pause();updateRain();applyVolume();notify();onError?.(error);
       }
     }
@@ -69,12 +70,13 @@ window.CloudMusic = (() => {
         if(scene===next)return;scene=next;for(const bank of cueBanks.values())for(const p of bank){p.pause();p.currentTime=0;}notify();updateRain();if(enabled)return start();
       },
       setEnabled(value){
-        enabled=Boolean(value);notify();updateRain();
+        enabled=Boolean(value);waitingForGesture=false;notify();updateRain();
         if(enabled)return start();
         for(const bank of cueBanks.values())for(const p of bank){p.pause();p.currentTime=0;}
         cancelAnimationFrame(mixAnimation);mixAnimation=0;duck=1;duckUntil=0;
         ++generation;fade([0,0],.55,()=>players.forEach(p=>p.pause()));
       },
+      resume(){if(enabled&&waitingForGesture)return start();},
       playCue(name){
         if(!enabled)return false;const bank=cueBanks.get(name);if(!bank)return false;
         const p=bank.find(p=>p.paused||p.ended)||bank.reduce((a,b)=>a.currentTime>b.currentTime?a:b);

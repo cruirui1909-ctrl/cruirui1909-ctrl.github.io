@@ -37,14 +37,21 @@
     if(audio)audio.master.gain.setTargetAtTime(enabled?.65:0,audio.context.currentTime,.4);
     effects?.setEnabled(enabled);
   }
-  function sound(){
+  function prepareAudio(){
     if(!audio){
       const Context=window.AudioContext||window.webkitAudioContext;if(!Context)return;
       const context=new Context(),master=context.createGain();master.gain.value=0;master.connect(context.destination);
       audio={context,master};
       effects=CloudSound.create(context,master,name=>music.playCue(name));effects.setScene(state.worldIndex<0?null:state.worldIndex);
     }
-    audio.context.resume();music.setEnabled(!audioOn);ui.canvas.focus({preventScroll:true});
+    audio.context.resume().catch(()=>{});
+  }
+  function sound(){
+    prepareAudio();music.setEnabled(!audioOn);ui.canvas.focus({preventScroll:true});
+  }
+  function unlockSound(event){
+    if(!audioOn||!event.isTrusted||event.target.closest?.('#sound'))return;
+    prepareAudio();music.resume();
   }
   function setProgress(value){
     if(!['approach','ready','turning'].includes(state.phase))return;
@@ -202,6 +209,8 @@
     }
   }
   function installEvents(){
+    document.addEventListener('pointerdown',unlockSound,true);
+    document.addEventListener('keydown',unlockSound,true);
     window.addEventListener('wheel',e=>{if($('help').open||$('atlas').open)return;e.preventDefault();const d=e.deltaY*(e.deltaMode===1?25:e.deltaMode===2?innerHeight:1);if(state.phase==='world')state.worldZoomTarget=T.MathUtils.clamp(state.worldZoomTarget+d*.00048,0,1);else setProgress(state.progressTarget+d*.00078);},{passive:false});
     window.addEventListener('keydown',onKey);window.addEventListener('keyup',e=>{if(e.code==='Space')endTurn();});window.addEventListener('blur',()=>{endTurn();leavePointer();});
     document.addEventListener('visibilitychange',()=>{if(document.hidden){endTurn();leavePointer();}previous=performance.now();});
@@ -233,7 +242,7 @@
     renderer=new T.WebGLRenderer({canvas:ui.canvas,antialias:true,alpha:false,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.4));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=T.SRGBColorSpace;renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1.02;
     camera=new T.PerspectiveCamera(48,innerWidth/innerHeight,.08,240);hall=CloudHall.create(renderer,hit=>effects?.event('bubble',undefined,hit),key=>music?.playCue('piano-'+key.midi));hall.resize(innerWidth,innerHeight);daylight=CloudOptics.createDaylight({reducedMotion});daylight.resize(Math.round(innerWidth*renderer.getPixelRatio()),Math.round(innerHeight*renderer.getPixelRatio()));
     music=CloudMusic.create(updateMusicUI,message=>announce(message||'音乐暂未播放，请点击右上角重新开启'));updateMusicUI({enabled:false,track:PIANO_TRACKS[0]});
-    installEvents();renderAtlas();ready=true;ui.canvas.focus({preventScroll:true});requestAnimationFrame(tick);
+    installEvents();renderAtlas();sound();ready=true;ui.canvas.focus({preventScroll:true});requestAnimationFrame(tick);
     setTimeout(()=>$('loading').classList.add('done'),450);setTimeout(()=>$('loading').hidden=true,1500);
     window.cloudExperience={
       getState(){const screen=ball?.position.clone().project(camera);return {phase:state.phase,progress:state.progress,target:state.progressTarget,angle:state.angle,chosen:state.chosen,world:state.worldIndex,worldTravel:state.worldZoom,worldTravelTarget:state.worldZoomTarget,draws:state.draws,frames:state.frames,averageFrameMs:state.averageFrameMs,visited:visited.slice(),hall:hall.stats(),worldStats:world?.stats()||null,daylight:world?daylight.stats():null,capsulePosition:ball?.position.toArray()||null,capsuleScreen:screen?[(screen.x*.5+.5)*innerWidth,(-screen.y*.5+.5)*innerHeight]:null,renderer:{calls:renderer.info.render.calls,triangles:renderer.info.render.triangles}};},
