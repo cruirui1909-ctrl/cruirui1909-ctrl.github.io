@@ -1,0 +1,168 @@
+{
+  "water.wav": {
+    "duration": 3.247,
+    "rms": 0.0752,
+    "peak": 0.6025,
+    "source": {
+      "author": "transitking",
+      "title": "Water Waves",
+      "url": "https://opengameart.org/content/water-waves"
+    },
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "processing": "Trimmed, filtered, faded and level-balanced; original source and license pages in source/"
+  },
+  "bubble.wav": {
+    "duration": 0.36,
+    "rms": 0.0549,
+    "peak": 0.4337,
+    "source": {
+      "author": "farfadet46",
+      "title": "bubbles 'pop'",
+      "url": "https://opengameart.org/content/bubbles-pop"
+    },
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "processing": "Trimmed, filtered, faded and level-balanced; original source and license pages in source/"
+  },
+  "piano/48.mp3": {
+    "midi": 48,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/49.mp3": {
+    "midi": 49,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/50.mp3": {
+    "midi": 50,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/51.mp3": {
+    "midi": 51,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/52.mp3": {
+    "midi": 52,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/53.mp3": {
+    "midi": 53,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/54.mp3": {
+    "midi": 54,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/55.mp3": {
+    "midi": 55,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/56.mp3": {
+    "midi": 56,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/57.mp3": {
+    "midi": 57,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/58.mp3": {
+    "midi": 58,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/59.mp3": {
+    "midi": 59,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/60.mp3": {
+    "midi": 60,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/61.mp3": {
+    "midi": 61,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/62.mp3": {
+    "midi": 62,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/63.mp3": {
+    "midi": 63,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/64.mp3": {
+    "midi": 64,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/65.mp3": {
+    "midi": 65,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/66.mp3": {
+    "midi": 66,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/67.mp3": {
+    "midi": 67,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/68.mp3": {
+    "midi": 68,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "piano/69.mp3": {
+    "midi": 69,
+    "duration": 2.15,
+    "source": "FreePats Upright Piano KW 2022-02-21, CC0; see ../music/source/piano-bank-readme.txt"
+  },
+  "rain.mp3": {
+    "duration": 37.513,
+    "rms": 0.0735,
+    "peak": 0.6205,
+    "source": {
+      "author": "Ylmir",
+      "title": "Rain (loopable), variant 4",
+      "url": "https://opengameart.org/content/rain-loopable"
+    },
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "processing": "Trimmed, filtered, faded and level-balanced; original source and license pages in source/"
+  },
+  "thunder.wav": {
+    "duration": 11.0,
+    "rms": 0.1215,
+    "peak": 0.6305,
+    "source": {
+      "author": "WuxiaScrub",
+      "title": "Rain + Long Thunder",
+      "url": "https://opengameart.org/content/rain-long-thunder",
+      "segmentSeconds": [
+        21,
+        32
+      ]
+    },
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "processing": "Trimmed, filtered, faded and level-balanced; original source and license pages in source/"
+  }
+}
